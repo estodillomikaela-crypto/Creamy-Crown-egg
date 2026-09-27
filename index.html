@@ -1,1 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creamy Crown Egg | Royal Crispy Bites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <style>
+    :root {
+      --primary: #c98816;
+      --primary-dark: #976007;
+      --primary-light: #fef5e4;
+      --accent: #d33c1d;
+      --cream-bg: #faf7f2;
+      --surface: #ffffff;
+      --text: #211c16;
+      --muted: #6b6359;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 16px 36px rgba(201, 136, 22, 0.15);
+      --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--cream-bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Header / Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 7%;
+      background: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201, 136, 22, 0.15);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text);
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.6rem;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #e59f23 100%);
+      color: white;
+      box-shadow: 0 8px 20px rgba(201, 136, 22, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(201, 136, 22, 0.45);
+    }
+
+    /* Hero Section */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 4rem 7% 5rem;
+      max-width: 1350px;
+      margin: 0 auto;
+    }
+
+    .pill-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 99px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid rgba(201, 136, 22, 0.25);
+    }
+
+    .hero-title {
+      font-size: 3.4rem;
+      line-height: 1.15;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-img {
+      width: 100%;
+      max-width: 480px;
+      border-radius: var(--radius-lg);
+      border: 8px solid white;
+      box-shadow: var(--shadow-lg);
+      object-fit: cover;
+    }
+
+    .floating-price-card {
+      position: absolute;
+      bottom: -15px;
+      left: 20px;
+      background: white;
+      padding: 1rem 1.4rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid #f0e6d6;
+    }
+
+    .floating-price-card .price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .floating-price-card span {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* Features Strip */
+    .features {
+      background: white;
+      padding: 2.8rem 7%;
+      border-top: 1px solid #ede4d3;
+      border-bottom: 1px solid #ede4d3;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .feature-icon {
+      font-size: 2.2rem;
+    }
+
+    .feature-item h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .feature-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Menu Showcase Section */
+    .menu-section {
+      padding: 5rem 7%;
+      max-width: 1250px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .menu-showcase-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid #f1e9dd;
+      margin-bottom: 3.5rem;
+    }
+
+    .menu-board-img {
+      width: 100%;
+      max-width: 860px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Flavor Selector Grid */
+    .flavor-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .flavor-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1rem;
+      border: 1px solid #ede4d3;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .flavor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+    .flavor-name {
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .flavor-price {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 1.2rem;
+    }
+
+    .qty-btn {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 99px;
+      border: 1px solid var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .qty-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 5rem 7%;
+      background: white;
+      border-top: 1px solid #eee5d8;
+      border-bottom: 1px solid #eee5d8;
+    }
+
+    .about-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-tagline {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    /* Contact & Location Section */
+    .contact-section {
+      padding: 5rem 7%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .contact-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid #eee5d8;
+    }
+
+    .contact-card h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .info-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 1.4rem;
+      align-items: flex-start;
+    }
+
+    .info-icon {
+      font-size: 1.3rem;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-text strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .info-text a, .info-text p {
+      font-size: 1rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .info-text a:hover {
+      color: var(--primary);
+    }
+
+    /* Social Links Grid */
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--radius-md);
+      background: var(--cream-bg);
+      border: 1px solid #ebd9c0;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateX(6px);
+      color: var(--primary-dark);
+    }
+
+    .social-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Tagline Promo Banner */
+    .banner {
+      background: linear-gradient(135deg, #221c15 0%, #15110c 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 4.5rem 2rem;
+      margin: 2rem 7% 4rem;
+      text-align: center;
+      border: 1px solid #443725;
+    }
+
+    .banner h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 2.3rem;
+      color: #ffd875;
+      margin-bottom: 1rem;
+    }
+
+    .banner p {
+      font-size: 1.15rem;
+      color: #ded6cb;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Footer */
+    footer {
+      background: white;
+      padding: 3rem 7% 2rem;
+      border-top: 1px solid #eee5d8;
+      text-align: center;
+    }
+
+    .footer-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 2rem;
+      }
+      .hero-title { font-size: 2.6rem; }
+      .hero-subtitle { margin: 0 auto 2rem; }
+      .hero-actions { justify-content: center; }
+      .floating-price-card { left: 50%; transform: translateX(-50%); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <img src="1000081322.jpg" alt="Creamy Crown Egg Logo" />
+      <span class="brand-title">Creamy Crown Egg</span>
+    </a>
+    
+    <ul class="nav-links">
+      <li><a href="#flavors">Flavors</a></li>
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact & Location</a></li>
+    </ul>
+
+    <a href="#order" class="btn btn-primary">Order Now</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="pill-badge">👑 Royal Street Gourmet</span>
+      <h1 class="hero-title">Golden crunch outside, <span>velvety whip</span> inside.</h1>
+      <p class="hero-subtitle">
+        Indulge in crispy panko-crusted egg cups generously filled with silky, seasoned whipped yolks and artisanal toppings. Once you try it, you'll crave it!
+      </p>
+      <div class="hero-actions">
+        <a href="#flavors" class="btn btn-primary">Explore 5 Flavors</a>
+        <a href="#contact" class="btn" style="background:#f2ede4; color:var(--text);">Find Us</a>
+      </div>
+    </div>
+
+    <div class="hero-image-wrap">
+      <img src="1000081324.jpg" alt="Crispy Fried Egg Platter" class="hero-img" />
+      <div class="floating-price-card">
+        <div class="price">₱35</div>
+        <span>per signature cup</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Highlights -->
+  <section class="features" id="why-us">
+    <div class="features-grid">
+      <div class="feature-item">
+        <span class="feature-icon">🍳</span>
+        <div>
+          <h3>Golden Panko Crust</h3>
+          <p>Flash-fried to airy crispness while keeping the egg inside tender.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">✨</span>
+        <div>
+          <h3>Silky Crown Whip</h3>
+          <p>Whipped with secret herbs, creamy textures, and piped fresh.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🔥</span>
+        <div>
+          <h3>5 Rich Flavors</h3>
+          <p>From Garlic Parmesan to fire-glazed Spicy Barbeque.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flavors & Menu Showcase -->
+  <section class="menu-section" id="flavors">
+    <span class="pill-badge">Signature Menu</span>
+    <h2 class="section-title">The Royal Lineup</h2>
+    <p class="section-desc">Freshly prepared, double-dusted, and topped with mouthwatering ingredients.</p>
+
+    <!-- Original Photo Menu Board -->
+    <div class="menu-showcase-card">
+      <img src="1000081323.jpg" alt="Creamy Crown Egg Flavors Menu" class="menu-board-img" />
+    </div>
+
+    <!-- Quick Tap-to-Order Cards -->
+    <div class="flavor-selector-grid" id="order">
+      <div class="flavor-card">
+        <h4 class="flavor-name">Classic</h4>
+        <div class="flavor-price">₱35</div>
+        <button class="qty-btn" onclick="addToCart('Classic')">+ Add to Order</button>
+      </div>
+
+      <div class="flavor-card">
+        <h4 class="flavor-name">Cheesy Bacon</h4>
+        <div class="flavor-price">₱35</div>
+        <button class="qty-btn" onclick="addToCart('Cheesy Bacon')">+ Add to Order</button>
+      </div>
+
+      <div class="flavor-card">
+        <h4 class="flavor-name">Spinach Cheese</h4>
+        <div class="flavor-price">₱35</div>
+        <button class="qty-btn" onclick="addToCart('Spinach Cheese')">+ Add to Order</button>
+      </div>
+
+      <div class="flavor-card">
+        <h4 class="flavor-name">Garlic Parmesan</h4>
+        <div class="flavor-price">₱35</div>
+        <button class="qty-btn" onclick="addToCart('Garlic Parmesan')">+ Add to Order</button>
+      </div>
+
+      <div class="flavor-card">
+        <h4 class="flavor-name">Spicy Barbeque</h4>
+        <div class="flavor-price">₱35</div>
+        <button class="qty-btn" onclick="addToCart('Spicy Barbeque')">+ Add to Order</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="about-container">
+      <span class="pill-badge">Our Story</span>
+      <h2 class="about-tagline">"Once you try it, You'll Crave it!"</h2>
+      <p class="about-text">
+        At <strong>Creamy Crown Egg</strong>, we believe street food can be an extraordinary gourmet experience. We take tender hard-boiled eggs, coat them in crunchy Japanese panko, fry them golden, and crown them with seasoned, velvety whipped yolk filling and rich artisanal toppings. From comforting Classic to savory Garlic Parmesan, every bite is crafted to deliver royal satisfaction at street-friendly prices.
+      </p>
+      <a href="#order" class="btn btn-primary">Taste The Difference</a>
+    </div>
+  </section>
+
+  <!-- Contact & Location Section -->
+  <section class="contact-section" id="contact">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <span class="pill-badge">Find & Follow</span>
+      <h2 class="section-title">Get in Touch with Us</h2>
+      <p class="section-desc">Drop by our location or connect with us directly across our official social channels.</p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Store Details & Location -->
+      <div class="contact-card">
+        <h3>📍 Location & Ordering</h3>
+        
+        <div class="info-row">
+          <div class="info-icon">📍</div>
+          <div class="info-text">
+            <strong>Store Address:</strong>
+            <p>F Legaspi St. Ugong, Pasig City</p>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">📞</div>
+          <div class="info-text">
+            <strong>Phone / Hotline:</strong>
+            <a href="tel:09603794271">09603794271</a>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon">👑</div>
+          <div class="info-text">
+            <strong>Official Slogan:</strong>
+            <p>Once you try it, You'll Crave it!</p>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <a href="tel:09603794271" class="btn btn-primary" style="width: 100%;">Call 09603794271 to Order</a>
+        </div>
+      </div>
+
+      <!-- Social Media Links -->
+      <div class="contact-card">
+        <h3>📱 Follow Our Socials</h3>
+        <div class="social-links">
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/share/1ESGPJsftj/" target="_blank" rel="noopener" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.19 22 12z"/></svg>
+            <span>Facebook / Creamy Crown Egg</span>
+          </a>
+
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/creamycrownegg?stkn=dG53NGZ0ejZ5aDFm" target="_blank" rel="noopener" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <span>Instagram / @creamycrownegg</span>
+          </a>
+
+          <!-- TikTok -->
+          <a href="https://www.tiktok.com/@creamy.crown.egg2?_r=1&_t=ZS-9A3nvBPXvcL" target="_blank" rel="noopener" class="social-btn">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 
