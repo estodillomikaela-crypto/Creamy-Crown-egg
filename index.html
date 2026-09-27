@@ -1,1 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creamy Crown Egg | Royal Street Gourmet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <style>
+    :root {
+      --bg-cream: #faf6f0;
+      --card-cream: #f4ebe1;
+      --primary-terra: #c45b34;
+      --primary-terra-hover: #ab4823;
+      --accent-gold: #c98816;
+      --text-dark: #241e19;
+      --text-muted: #6e645a;
+      --white: #ffffff;
+      --radius-xl: 32px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-full: 9999px;
+      --shadow-soft: 0 10px 30px rgba(70, 45, 25, 0.06);
+      --shadow-hover: 0 16px 36px rgba(196, 91, 52, 0.16);
+      --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Top Navigation (Savoria Style) */
+    .header {
+      padding: 1.2rem 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-cream);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent-gold);
+    }
+
+    .brand-text h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.45rem;
+      letter-spacing: 1px;
+      color: var(--text-dark);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .brand-text span {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary-terra);
+      font-weight: 700;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--primary-terra);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--card-cream);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-dark);
+      transition: var(--transition);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .icon-btn:hover {
+      background: var(--primary-terra);
+      color: var(--white);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: var(--primary-terra);
+      color: white;
+      font-size: 0.68rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    /* Hero Banner (Enclosed Rounded Container like Savoria) */
+    .hero-wrapper {
+      padding: 0.5rem 6% 3.5rem;
+    }
+
+    .hero-card {
+      background-color: var(--card-cream);
+      border-radius: var(--radius-xl);
+      padding: 4rem 5rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--text-dark);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2.2rem;
+      max-width: 480px;
+    }
+
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .btn-terra {
+      background-color: var(--primary-terra);
+      color: var(--white);
+      padding: 0.9rem 2.2rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: var(--transition);
+      box-shadow: 0 8px 20px rgba(196, 91, 52, 0.28);
+    }
+
+    .btn-terra:hover {
+      background-color: var(--primary-terra-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(196, 91, 52, 0.38);
+    }
+
+    .btn-outline-dark {
+      border: 1.5px solid #d4c4b2;
+      background: transparent;
+      color: var(--text-dark);
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .btn-outline-dark:hover {
+      border-color: var(--text-dark);
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .hero-img-wrap {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-dish-img {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 28px;
+      box-shadow: 0 20px 45px rgba(60, 35, 15, 0.15);
+      border: 8px solid var(--white);
+      object-fit: cover;
+    }
+
+    /* Section Headers */
+    .section-head {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      background: #ebd8c8;
+      color: var(--primary-terra);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0.35rem 1.1rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-head h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.6rem;
+      color: var(--text-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Featured Dishes & Trio Box */
+    .dishes-section {
+      padding: 5rem 6%;
+      max-width: 1350px;
+      margin: 0 auto;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .dish-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #efe5d8;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .dish-card-img-wrap {
+      width: 100%;
+      height: 240px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 1.3rem;
+      background: var(--card-cream);
+    }
+
+    .dish-card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .dish-card:hover .dish-card-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .dish-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
+    }
+
+    .dish-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .dish-price {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-terra);
+    }
+
+    .dish-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.4rem;
+      flex-grow: 1;
+    }
+
+    .dish-order-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--card-cream);
+      color: var(--primary-terra);
+      border: none;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dish-order-btn:hover {
+      background: var(--primary-terra);
+      color: var(--white);
+    }
+
+    /* Menu Board Display */
+    .menu-board-container {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      border: 1px solid #eee2d3;
+      margin-bottom: 3rem;
+    }
+
+    .menu-board-img {
+      max-width: 900px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
+
+    /* About Section */
+    .about-section {
+      background: var(--card-cream);
+      padding: 5.5rem 6%;
+      border-radius: var(--radius-xl);
+      margin: 2rem 6% 5rem;
+      text-align: center;
+    }
+
+    .about-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+
+    .about-body {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.8;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 4rem 6% 6rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ebd9c7;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .faq-question {
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      user-select: none;
+    }
+
+    .faq-question span.toggle-icon {
+      font-size: 1.4rem;
+      color: var(--primary-terra);
+      transition: var(--transition);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out;
+      background: #faf6f0;
+      padding: 0 1.8rem;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .faq-item.open .faq-answer {
+      padding: 0.5rem 1.8rem 1.4rem;
+      max-height: 250px;
+    }
+
+    .faq-item.open .faq-question span.toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Socials & Location */
+    .contact-section {
+      padding: 4rem 6% 6rem;
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .box-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #eee2d3;
+    }
+
+    .box-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      margin-bottom: 2rem;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .info-item .icon {
+      font-size: 1.3rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--card-cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--primary-terra);
+    }
+
+    .info-item strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    .info-item a, .info-item p {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.98rem;
+    }
+
+    /* Channel/Social buttons */
+    .channel-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .channel-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.85rem 1.3rem;
+      border-radius: var(--radius-md);
+      background: var(--bg-cream);
+      border: 1px solid #ebd9c7;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .channel-row:hover {
+      background: var(--card-cream);
+      border-color: var(--primary-terra);
+      transform: translateX(6px);
+      color: var(--primary-terra);
+    }
+
+    .channel-row svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--card-cream);
+      padding: 3rem 6% 2.5rem;
+      text-align: center;
+      border-top: 1px solid #e7d8c7;
+    }
+
+    footer img {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      margin-bottom: 0.8rem;
+    }
+
+    @media (max-width: 990px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+      .hero-title { font-size: 2.8rem; }
+      .hero-desc { margin: 0 auto 2rem; }
+      .hero-btns { justify-content: center; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="header">
+    <a href="#" class="brand">
+      <img src="1000081322.jpg" alt="Creamy Crown Egg Emblem" class="brand-logo" />
+      <div class="brand-text">
+        <h1>CREAMY CROWN</h1>
+        <span>Gourmet Egg Bites</span>
+      </div>
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#socials">Socials</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Search Icon Button -->
+      <a href="#menu" class="icon-btn" title="Search Menu">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+      </a>
+      <!-- Cart Icon Button -->
+      <a href="#menu" class="icon-btn" title="View Cart">
+        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Banner (Savoria Layout with Cupcake Egg Image) -->
+  <main class="hero-wrapper">
+    <section class="hero-card">
+      <div class="hero-content">
+        <h2 class="hero-title">Delicious Moments for Every Taste</h2>
+        <p class="hero-desc">
+          Experience gourmet excellence crafted with love. Crispy panko-fried egg cups filled with velvety seasoned yolk whip and artisanal toppings. Once you try it, you'll crave it!
+        </p>
+        <div class="hero-btns">
+          <a href="#menu" class="btn-terra">Order Now</a>
+          <a href="#menu" class="btn-outline-dark">View Menu</a>
+        </div>
+      </div>
+
+      <div class="hero-img-wrap">
+        <!-- Replaced Chef with your Cupcake-style Egg Image -->
+        <img src="1000081329.jpg" alt="Signature Creamy Crown Egg Cup" class="hero-dish-img" />
+      </div>
+    </section>
+  </main>
+
+  <!-- Dishes & Menu Section -->
+  <section class="dishes-section" id="menu">
+    <div class="section-head">
+      <span class="badge-pill">Fresh From The Kitchen</span>
+      <h2>Handcrafted Specialties</h2>
+      <p>Enjoy our signature creations prepared fresh daily with the finest savory ingredients.</p>
+    </div>
+
+    <!-- Featured Dish Cards including Trio Box & Platter -->
+    <div class="featured-grid">
+      <!-- Dish 1: Crown Trio Box (New Photo Added!) -->
+      <div class="dish-card">
+        <div class="dish-card-img-wrap">
+          <img src="1000081328.jpg" alt="Crown Trio Box (3 Pcs)" />
+        </div>
+        <div class="dish-info">
+          <h3 class="dish-title">Crown Trio Box</h3>
+          <span class="dish-price">₱100</span>
+        </div>
+        <p class="dish-desc">A perfect take-out box of 3 freshly crowned crispy egg bites garnished with signature spices and chives.</p>
+        <button class="dish-order-btn" onclick="addToOrder('Crown Trio Box', 100)">+ Add to Box (₱100)</button>
+      </div>
+
+      <!-- Dish 2: Signature Platter -->
+      <div class="dish-card">
+        <div class="dish-card-img-wrap">
+          <img src="1000081324.jpg" alt="Crown Party Platter" />
+        </div>
+        <div class="dish-info">
+          <h3 class="dish-title">Crown Party Platter</h3>
+          <span class="dish-price">₱170</span>
+        </div>
+        <p class="dish-desc">A mouthwatering sharing plate of 5 assorted signature crowned egg cups for gatherings and snack times.</p>
+        <button class="dish-order-btn" onclick="addToOrder('Party Platter', 170)">+ Add to Box (₱170)</button>
+      </div>
+
+      <!-- Dish 3: Signature Cupcake Crown -->
+      <div class="dish-card">
+        <div class="dish-card-img-wrap">
+          <img src="1000081329.jpg" alt="Single Signature Crown" />
+        </div>
+        <div class="dish-info">
+          <h3 class="dish-title">Single Crown Cup</h3>
+          <span class="dish-price">₱35</span>
+        </div>
+        <p class="dish-desc">Freshly fried golden panko exterior piped with luxurious creamy whipped egg yolk filling.</p>
+        <button class="dish-order-btn" onclick="addToOrder('Single Crown Cup', 35)">+ Add to Box (₱35)</button>
+      </div>
+    </div>
+
+    <!-- Menu Board Display -->
+    <div class="menu-board-container">
+      <span class="badge-pill">The Full Selection</span>
+      <h3 style="font-family:'Playfair Display', serif; font-size:2rem; margin-bottom:1.5rem;">5 Royal Signature Flavors (₱35 Each)</h3>
+      <img src="1000081323.jpg" alt="Creamy Crown Egg Flavors Board" class="menu-board-img" />
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <span class="badge-pill">Our Philosophy</span>
+    <h2 class="about-tagline">"Once you try it, You'll Crave it!"</h2>
+    <p class="about-body">
+      At <strong>Creamy Crown Egg</strong>, street food is elevated to a royal snack experience. We carefully prepare hard-boiled eggs with a double panko coating, flash-fry them to golden crispness, and pipe them with our secret whipped, velvety seasoned yolk cream. From garlic parmesan indulgence to spicy barbeque glaze, every bite satisfies your deepest cravings.
+    </p>
+    <a href="#contact" class="btn-terra">Visit Us in Pasig City</a>
+  </section>
+
+  <!-- FAQ Section (NEW) -->
+  <section class="faq-section" id="faq">
+    <div class="section-head">
+      <span class="badge-pill">Got Questions?</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Here is everything you need to know about our savory crowned eggs.</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What exactly is a Creamy Crown Egg?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        It is a gourmet twist on crispy d
