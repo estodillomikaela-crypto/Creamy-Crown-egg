@@ -239,23 +239,6 @@
       margin: 0 auto;
     }
 
-    .menu-board-container {
-      background: var(--white);
-      border-radius: var(--radius-xl);
-      padding: 2.5rem;
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-      border: 1px solid #eee2d3;
-      margin-bottom: 3rem;
-    }
-
-    .menu-board-img {
-      max-width: 900px;
-      width: 100%;
-      border-radius: var(--radius-lg);
-      margin-top: 1rem;
-    }
-
     /* Menu Description Cards */
 
     .menu-grid {
@@ -269,12 +252,15 @@
       background: var(--white);
       border: 1px solid #ebd9c7;
       border-radius: var(--radius-lg);
-      padding: 1.7rem 1.3rem;
+      padding: 1.5rem 1.2rem;
       text-align: center;
       box-shadow: var(--shadow-soft);
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .menu-card::before {
@@ -293,30 +279,26 @@
       border-color: var(--primary-terra);
     }
 
-    .menu-icon {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: var(--light-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 1.8rem;
+    .menu-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
     }
 
     .menu-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       color: var(--text-dark);
-      margin-bottom: 0.7rem;
+      margin-bottom: 0.5rem;
     }
 
     .menu-card p {
       color: var(--text-muted);
       font-size: 0.88rem;
-      line-height: 1.65;
-      margin-bottom: 1rem;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
     }
 
     .menu-price {
@@ -325,8 +307,9 @@
       color: white;
       border-radius: var(--radius-full);
       padding: 0.35rem 0.9rem;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 800;
+      align-self: center;
     }
 
     /* =========================
@@ -611,10 +594,6 @@
         padding: 4rem 4%;
       }
 
-      .menu-board-container {
-        padding: 1.3rem;
-      }
-
       .menu-grid {
         grid-template-columns: 1fr;
       }
@@ -764,48 +743,101 @@
     </div>
 
 
-    <!-- Full Menu Board -->
-
-    <div class="menu-board-container">
-
-      <span class="badge-pill">
-        The Full Selection
-      </span>
-
-      <h3 style="font-family:'Playfair Display', serif; font-size:2rem; margin-bottom:1.5rem;">
-        5 Royal Signature Flavors · ₱35 Each
-      </h3>
-
-      <img
-        src="1000081323.jpg"
-        alt="Creamy Crown Egg Flavors Board"
-        class="menu-board-img"
-      />
-
-    </div>
-
-
     <!-- Menu Descriptions -->
 
     <div class="menu-grid">
 
-      <!-- Flavor 1 -->
+      <!-- Flavor 1: Classic -->
 
       <article class="menu-card">
 
-        <div class="menu-icon">
-          🧄
-        </div>
+        <img 
+          src="classic.jpg" 
+          alt="Classic Creamy Crown Egg" 
+          class="menu-card-img"
+        />
+
+        <h3>
+          Classic
+        </h3>
+
+        <p>
+          Velvety seasoned yolk whipped to perfection with a dash of fresh herbs.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 2: Cheesy Bacon -->
+
+      <article class="menu-card">
+
+        <img 
+          src="cheesy-bacon.jpg" 
+          alt="Cheesy Bacon Creamy Crown Egg" 
+          class="menu-card-img"
+        />
+
+        <h3>
+          Cheesy Bacon
+        </h3>
+
+        <p>
+          Creamy yolk whip loaded with shredded cheddar cheese and savory crispy bacon.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 3: Spinach Cheese -->
+
+      <article class="menu-card">
+
+        <img 
+          src="spinach-cheese.jpg" 
+          alt="Spinach Cheese Creamy Crown Egg" 
+          class="menu-card-img"
+        />
+
+        <h3>
+          Spinach Cheese
+        </h3>
+
+        <p>
+          A rich creamed spinach and melted cheese blend atop a golden egg cup.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 4: Garlic Parmesan -->
+
+      <article class="menu-card">
+
+        <img 
+          src="garlic-parmesan.jpg" 
+          alt="Garlic Parmesan Creamy Crown Egg" 
+          class="menu-card-img"
+        />
 
         <h3>
           Garlic Parmesan
         </h3>
 
         <p>
-          A rich and savory combination of creamy seasoned
-          yolk, aromatic garlic, and parmesan goodness.
-          Finished with a delicious cheesy touch for
-          a comforting and indulgent bite.
+          Aromatic garlic and rich parmesan cheese dusted over smooth yolk whip.
         </p>
 
         <span class="menu-price">
@@ -815,97 +847,22 @@
       </article>
 
 
-      <!-- Flavor 2 -->
+      <!-- Flavor 5: Spicy Barbeque -->
 
       <article class="menu-card">
 
-        <div class="menu-icon">
-          🌶️
-        </div>
+        <img 
+          src="spicy-barbeque.jpg" 
+          alt="Spicy Barbeque Creamy Crown Egg" 
+          class="menu-card-img"
+        />
 
         <h3>
-          Spicy BBQ
+          Spicy Barbeque
         </h3>
 
         <p>
-          A bold sweet-and-spicy flavor featuring our
-          creamy yolk filling paired with a smoky barbecue
-          glaze and a satisfying kick of heat.
-        </p>
-
-        <span class="menu-price">
-          ₱35
-        </span>
-
-      </article>
-
-
-      <!-- Flavor 3 -->
-
-      <article class="menu-card">
-
-        <div class="menu-icon">
-          🧀
-        </div>
-
-        <h3>
-          Cheesy Cream
-        </h3>
-
-        <p>
-          Smooth, creamy, and cheesy from the first bite.
-          Our velvety yolk filling is complemented by
-          rich cheese flavors for the ultimate creamy snack.
-        </p>
-
-        <span class="menu-price">
-          ₱35
-        </span>
-
-      </article>
-
-
-      <!-- Flavor 4 -->
-
-      <article class="menu-card">
-
-        <div class="menu-icon">
-          🌿
-        </div>
-
-        <h3>
-          Herb &amp; Savory
-        </h3>
-
-        <p>
-          A fragrant blend of herbs and savory seasonings
-          that brings out the natural richness of the egg
-          while adding a fresh and aromatic finish.
-        </p>
-
-        <span class="menu-price">
-          ₱35
-        </span>
-
-      </article>
-
-
-      <!-- Flavor 5 -->
-
-      <article class="menu-card">
-
-        <div class="menu-icon">
-          👑
-        </div>
-
-        <h3>
-          Royal Special
-        </h3>
-
-        <p>
-          Our signature royal creation combines creamy
-          seasoned yolk with delicious toppings and bold
-          savory flavors for a truly indulgent Crown Egg.
+          Smoky BBQ sauce glaze paired with chili flakes for a sweet and spicy kick.
         </p>
 
         <span class="menu-price">
@@ -1068,8 +1025,7 @@
       <div class="faq-answer">
 
         We currently offer five Royal Signature Flavors:
-        <strong>Garlic Parmesan, Spicy BBQ, Cheesy Cream,
-        Herb &amp; Savory, and Royal Special.</strong>
+        <strong>Classic, Cheesy Bacon, Spinach Cheese, Garlic Parmesan, and Spicy Barbeque.</strong>
 
       </div>
 
@@ -1349,4 +1305,3 @@
 
 </body>
 </html>
-
