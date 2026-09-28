@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -351,6 +352,1002 @@
 
     .about-body {
       font-size: 1.15rem;
-      color:
-```
+      color: var(--text-muted);
+      max-width: 850px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
 
+    /* Mission Vision */
+
+    .mission-vision {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1050px;
+      margin: 0 auto 2.8rem;
+      text-align: left;
+    }
+
+    .mv-card {
+      background: var(--white);
+      padding: 2.2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid #ead8c6;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .mv-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .mv-label {
+      display: inline-block;
+      color: var(--primary-terra);
+      background: #f7e4d5;
+      padding: 0.35rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 1rem;
+    }
+
+    .mv-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-dark);
+    }
+
+    .mv-card p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    /* =========================
+       FAQ
+    ========================== */
+
+    .faq-section {
+      padding: 3rem 6% 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ebd9c7;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+      user-select: none;
+    }
+
+    .faq-question span.toggle-icon {
+      font-size: 1.5rem;
+      color: var(--primary-terra);
+      transition: var(--transition);
+      line-height: 1;
+    }
+
+    .faq-answer {
+      display: none;
+      background: #faf6f0;
+      padding: 0 1.8rem 1.4rem;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-item.active .toggle-icon {
+      transform: rotate(45deg);
+    }
+
+    /* =========================
+       CONTACT
+    ========================== */
+
+    .link-area {
+      padding: 3rem 6% 6rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .link-area h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .link-area p.contact-info {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      background: var(--white);
+      border: 1px solid #ebd9c7;
+      text-decoration: none;
+      color: #241e19;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .link-item:hover {
+      background: var(--card-cream);
+      border-color: var(--primary-terra);
+      transform: translateY(-3px);
+      color: var(--primary-terra);
+    }
+
+    .link-item svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer {
+      background: var(--card-cream);
+      padding: 3.5rem 6% 2.5rem;
+      text-align: center;
+      border-top: 1px solid #e7d8c7;
+    }
+
+    footer img {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      margin-bottom: 0.8rem;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================== */
+
+    @media (max-width: 1100px) {
+      .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 990px) {
+
+      .hero-card {
+        grid-template-columns: 1fr;
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: 2.8rem;
+      }
+
+      .hero-desc {
+        margin: 0 auto 2rem;
+      }
+
+      .hero-btns {
+        justify-content: center;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+
+      .mission-vision {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .hero-wrapper {
+        padding: 0.5rem 4% 2rem;
+      }
+
+      .hero-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 24px;
+      }
+
+      .hero-title {
+        font-size: 2.3rem;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-terra,
+      .btn-outline-dark {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+
+      .dishes-section {
+        padding: 4rem 4%;
+      }
+
+      .menu-board-container {
+        padding: 1.3rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head h2 {
+        font-size: 2rem;
+      }
+
+      .about-section {
+        margin: 1rem 4% 3rem;
+        padding: 3.5rem 1.3rem;
+      }
+
+      .about-tagline {
+        font-size: 1.9rem;
+      }
+
+      .about-body {
+        font-size: 1rem;
+      }
+
+      .mv-card {
+        padding: 1.7rem;
+      }
+
+      .faq-section,
+      .link-area {
+        padding-left: 4%;
+        padding-right: 4%;
+      }
+
+      .brand-text h1 {
+        font-size: 1.05rem;
+      }
+
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
+  <header class="header">
+
+    <a href="#" class="brand">
+
+      <img
+        src="1000081322.jpg"
+        alt="Creamy Crown Egg Logo"
+        class="brand-logo"
+      />
+
+      <div class="brand-text">
+        <h1>CREAMY CROWN EGG</h1>
+      </div>
+
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#links">Contact</a></li>
+    </ul>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <main class="hero-wrapper">
+
+    <section class="hero-card">
+
+      <div class="hero-content">
+
+        <h2 class="hero-title">
+          Delicious Moments for Every Taste
+        </h2>
+
+        <p class="hero-desc">
+          Experience culinary excellence crafted with passion.
+          Crispy panko-fried egg cups filled with velvety seasoned
+          yolk whip and artisanal toppings. Once you try it, you'll crave it!
+        </p>
+
+        <div class="hero-btns">
+
+          <a href="#menu" class="btn-terra">
+            Explore Menu
+          </a>
+
+          <a href="#about" class="btn-outline-dark">
+            Our Story
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="hero-img-wrap">
+
+        <img
+          src="1000081329.jpg"
+          alt="Signature Creamy Crown Egg Cup"
+          class="hero-dish-img"
+        />
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       MENU SECTION
+  ========================== -->
+
+  <section class="dishes-section" id="menu">
+
+    <div class="section-head">
+
+      <span class="badge-pill">
+        Our Menu
+      </span>
+
+      <h2>
+        Royal Signature Flavors
+      </h2>
+
+      <p>
+        Five delicious combinations created to turn a simple egg
+        into an unforgettable street-food experience.
+      </p>
+
+    </div>
+
+
+    <!-- Full Menu Board -->
+
+    <div class="menu-board-container">
+
+      <span class="badge-pill">
+        The Full Selection
+      </span>
+
+      <h3 style="font-family:'Playfair Display', serif; font-size:2rem; margin-bottom:1.5rem;">
+        5 Royal Signature Flavors · ₱35 Each
+      </h3>
+
+      <img
+        src="1000081323.jpg"
+        alt="Creamy Crown Egg Flavors Board"
+        class="menu-board-img"
+      />
+
+    </div>
+
+
+    <!-- Menu Descriptions -->
+
+    <div class="menu-grid">
+
+      <!-- Flavor 1 -->
+
+      <article class="menu-card">
+
+        <div class="menu-icon">
+          🧄
+        </div>
+
+        <h3>
+          Garlic Parmesan
+        </h3>
+
+        <p>
+          A rich and savory combination of creamy seasoned
+          yolk, aromatic garlic, and parmesan goodness.
+          Finished with a delicious cheesy touch for
+          a comforting and indulgent bite.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 2 -->
+
+      <article class="menu-card">
+
+        <div class="menu-icon">
+          🌶️
+        </div>
+
+        <h3>
+          Spicy BBQ
+        </h3>
+
+        <p>
+          A bold sweet-and-spicy flavor featuring our
+          creamy yolk filling paired with a smoky barbecue
+          glaze and a satisfying kick of heat.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 3 -->
+
+      <article class="menu-card">
+
+        <div class="menu-icon">
+          🧀
+        </div>
+
+        <h3>
+          Cheesy Cream
+        </h3>
+
+        <p>
+          Smooth, creamy, and cheesy from the first bite.
+          Our velvety yolk filling is complemented by
+          rich cheese flavors for the ultimate creamy snack.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 4 -->
+
+      <article class="menu-card">
+
+        <div class="menu-icon">
+          🌿
+        </div>
+
+        <h3>
+          Herb &amp; Savory
+        </h3>
+
+        <p>
+          A fragrant blend of herbs and savory seasonings
+          that brings out the natural richness of the egg
+          while adding a fresh and aromatic finish.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+
+      <!-- Flavor 5 -->
+
+      <article class="menu-card">
+
+        <div class="menu-icon">
+          👑
+        </div>
+
+        <h3>
+          Royal Special
+        </h3>
+
+        <p>
+          Our signature royal creation combines creamy
+          seasoned yolk with delicious toppings and bold
+          savory flavors for a truly indulgent Crown Egg.
+        </p>
+
+        <span class="menu-price">
+          ₱35
+        </span>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       ABOUT SECTION
+  ========================== -->
+
+  <section class="about-section" id="about">
+
+    <span class="badge-pill">
+      About Us
+    </span>
+
+    <h2 class="about-tagline">
+      "Once You Try It, You'll Crave It!"
+    </h2>
+
+    <p class="about-body">
+
+      At <strong>Creamy Crown Egg</strong>, street food is elevated
+      to a royal snack experience. We carefully prepare hard-boiled
+      eggs with a double panko coating, flash-fry them to golden
+      crispness, and pipe them with our secret whipped, velvety
+      seasoned yolk cream. From garlic parmesan indulgence to spicy
+      barbecue glaze, every bite is crafted to satisfy your cravings.
+
+    </p>
+
+
+    <!-- Mission & Vision -->
+
+    <div class="mission-vision">
+
+      <!-- Mission -->
+
+      <div class="mv-card">
+
+        <span class="mv-label">
+          Our Mission
+        </span>
+
+        <h3>
+          Mission
+        </h3>
+
+        <p>
+          To provide high-quality, innovative, and accessible food
+          products that deliver satisfying customer experiences
+          through exceptional taste, consistent quality, and
+          creative product development.
+        </p>
+
+      </div>
+
+
+      <!-- Vision -->
+
+      <div class="mv-card">
+
+        <span class="mv-label">
+          Our Vision
+        </span>
+
+        <h3>
+          Vision
+        </h3>
+
+        <p>
+          To become a trusted and recognized food business known
+          for innovation, quality, affordability, and continuous
+          product development that responds to evolving consumer
+          preferences.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <a href="#links" class="btn-terra">
+      Contact Us
+    </a>
+
+  </section>
+
+
+  <!-- =========================
+       FAQ
+  ========================== -->
+
+  <section class="faq-section" id="faq">
+
+    <div class="section-head">
+
+      <span class="badge-pill">
+        Got Questions?
+      </span>
+
+      <h2>
+        Frequently Asked Questions
+      </h2>
+
+    </div>
+
+
+    <!-- FAQ 1 -->
+
+    <div class="faq-item">
+
+      <div class="faq-question" onclick="toggleFaq(this)">
+
+        <span>
+          What exactly is a Creamy Crown Egg?
+        </span>
+
+        <span class="toggle-icon">
+          +
+        </span>
+
+      </div>
+
+      <div class="faq-answer">
+
+        It is a gourmet twist on crispy deviled eggs!
+        We take hard-boiled eggs, give them an airy panko
+        crunch shell, and fill them with silky whipped yolk
+        blended with special seasoning and flavorful toppings.
+
+      </div>
+
+    </div>
+
+
+    <!-- FAQ 2 -->
+
+    <div class="faq-item">
+
+      <div class="faq-question" onclick="toggleFaq(this)">
+
+        <span>
+          What flavors are available?
+        </span>
+
+        <span class="toggle-icon">
+          +
+        </span>
+
+      </div>
+
+      <div class="faq-answer">
+
+        We currently offer five Royal Signature Flavors:
+        <strong>Garlic Parmesan, Spicy BBQ, Cheesy Cream,
+        Herb &amp; Savory, and Royal Special.</strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- FAQ 3 -->
+
+    <div class="faq-item">
+
+      <div class="faq-question" onclick="toggleFaq(this)">
+
+        <span>
+          How much does it cost?
+        </span>
+
+        <span class="toggle-icon">
+          +
+        </span>
+
+      </div>
+
+      <div class="faq-answer">
+
+        Our individual signature flavors are just
+        <strong>₱35 per cup</strong>.
+
+        We also offer the
+        <strong>Crown Trio Box (3 pcs) for ₱100</strong>
+        and <strong>Party Platters (5 pcs) for ₱170</strong>.
+
+      </div>
+
+    </div>
+
+
+    <!-- FAQ 4 -->
+
+    <div class="faq-item">
+
+      <div class="faq-question" onclick="toggleFaq(this)">
+
+        <span>
+          Can I pre-order for events or parties?
+        </span>
+
+        <span class="toggle-icon">
+          +
+        </span>
+
+      </div>
+
+      <div class="faq-answer">
+
+        Yes! We welcome party boxes and bulk orders.
+        Simply call us at <strong>09603794271</strong>
+        or message us through our social media channels.
+
+      </div>
+
+    </div>
+
+
+    <!-- FAQ 5 -->
+
+    <div class="faq-item">
+
+      <div class="faq-question" onclick="toggleFaq(this)">
+
+        <span>
+          Where are you located?
+        </span>
+
+        <span class="toggle-icon">
+          +
+        </span>
+
+      </div>
+
+      <div class="faq-answer">
+
+        You can find Creamy Crown Egg at
+        <strong>F Legaspi St. Ugong, Pasig City.</strong>
+
+        For orders, availability, and inquiries,
+        please contact us at <strong>09603794271</strong>.
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CONTACT SECTION
+  ========================== -->
+
+  <section class="link-area" id="links">
+
+    <span class="badge-pill">
+      Contact Us
+    </span>
+
+    <h3>
+      Get In Touch
+    </h3>
+
+    <p class="contact-info">
+
+      📍 <strong>F Legaspi St. Ugong, Pasig City</strong>
+
+      &nbsp;|&nbsp;
+
+      📞 <strong>09603794271</strong>
+
+    </p>
+
+
+    <div class="link-list">
+
+      <!-- Facebook -->
+
+      <a
+        href="https://www.facebook.com/share/1ESGPJsftj/"
+        target="_blank"
+        rel="noopener"
+        class="link-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.19 22 12z"/>
+
+        </svg>
+
+        <span>
+          Facebook: Creamy Crown Egg
+        </span>
+
+      </a>
+
+
+      <!-- Instagram -->
+
+      <a
+        href="https://www.instagram.com/creamycrownegg"
+        target="_blank"
+        rel="noopener"
+        class="link-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.28-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+
+        </svg>
+
+        <span>
+          Instagram: @creamycrownegg
+        </span>
+
+      </a>
+
+
+      <!-- TikTok -->
+
+      <a
+        href="https://www.tiktok.com/@creamy.crown.egg2"
+        target="_blank"
+        rel="noopener"
+        class="link-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.32a6.34 6.34 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.27 8.27 0 0 0 5.17 1.83V7.43a4.83 4.83 0 0 1-1.4-.74z"/>
+
+        </svg>
+
+        <span>
+          TikTok: @creamy.crown.egg2
+        </span>
+
+      </a>
+
+
+      <!-- Pinterest -->
+
+      <a
+        href="https://www.pinterest.com/pin/2EuIgeGOg/"
+        target="_blank"
+        rel="noopener"
+        class="link-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+
+        </svg>
+
+        <span>
+          Pinterest: Creamy Crown Egg
+        </span>
+
+      </a>
+
+
+      <!-- X -->
+
+      <a
+        href="https://x.com/creamycrown_"
+        target="_blank"
+        rel="noopener"
+        class="link-item"
+      >
+
+        <svg viewBox="0 0 24 24">
+
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+
+        </svg>
+
+        <span>
+          X (Twitter): @creamycrown_
+        </span>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+
+    <img
+      src="1000081322.jpg"
+      alt="Creamy Crown Egg Logo"
+    />
+
+    <h4 style="font-family:'Playfair Display', serif; font-size:1.25rem; margin-bottom:0.3rem;">
+      Creamy Crown Egg
+    </h4>
+
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0.4rem;">
+      F Legaspi St. Ugong, Pasig City | 📞 09603794271
+    </p>
+
+    <p style="color:var(--text-muted); font-size:0.8rem;">
+      © 2026 Creamy Crown Egg. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <!-- =========================
+       FAQ JAVASCRIPT
+  ========================== -->
+
+  <script>
+
+    function toggleFaq(el) {
+
+      const parent = el.parentElement;
+
+      parent.classList.toggle('active');
+
+    }
+
+  </script>
+
+</body>
+</html>
+```
