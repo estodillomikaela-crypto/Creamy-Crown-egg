@@ -7,25 +7,29 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-cream: #faf6f0;
-      --card-cream: #f4ebe1;
-      --primary-terra: #c45b34;
-      --primary-terra-hover: #ab4823;
-      --accent-gold: #c98816;
-      --text-dark: #241e19;
-      --text-muted: #6e645a;
+      --bg-cream: #fffdf5;
+      --card-cream: #fef9c3;
+      --card-cream-soft: #fffbeb;
+      --primary-yellow: #ffc700;
+      --primary-yellow-hover: #facc15;
+      --primary-yellow-dark: #713f12;
+      --primary-terra: #ffc700;
+      --primary-terra-hover: #facc15;
+      --accent-gold: #facc15;
+      --text-dark: #1c1917;
+      --text-muted: #57534e;
       --white: #ffffff;
-      --light-gold: #f7ead2;
+      --light-gold: #fef08a;
       --radius-xl: 32px;
       --radius-lg: 20px;
       --radius-md: 14px;
       --radius-full: 9999px;
-      --shadow-soft: 0 10px 30px rgba(70, 45, 25, 0.06);
-      --shadow-hover: 0 16px 36px rgba(196, 91, 52, 0.16);
+      --shadow-soft: 0 10px 30px rgba(180, 130, 20, 0.08);
+      --shadow-hover: 0 16px 36px rgba(255, 199, 0, 0.35);
       --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
@@ -47,6 +51,16 @@
     }
 
     /* =========================
+       GLOBAL HEADERS (PLAYFAIR DISPLAY ITALIC)
+    ========================== */
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      color: var(--text-dark);
+    }
+
+    /* =========================
        HEADER & NAVIGATION
     ========================== */
 
@@ -55,11 +69,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(250, 246, 240, 0.95);
+      background: rgba(255, 253, 245, 0.96);
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid rgba(196, 91, 52, 0.08);
+      border-bottom: 2px solid #fde047;
       backdrop-filter: blur(10px);
       gap: 15px;
     }
@@ -82,6 +96,7 @@
 
     .brand-text h1 {
       font-family: 'Playfair Display', serif;
+      font-style: italic;
       font-size: 1.3rem;
       color: var(--text-dark);
       font-weight: 800;
@@ -104,7 +119,7 @@
     }
 
     .nav-menu a:hover {
-      color: var(--primary-terra);
+      color: #b45309;
     }
 
     /* =========================
@@ -180,7 +195,7 @@
 
     .mobile-menu a:hover {
       background: var(--card-cream);
-      color: var(--primary-terra);
+      color: #b45309;
     }
 
     /* =========================
@@ -214,7 +229,7 @@
 
     .search-btn {
       background: var(--primary-terra);
-      color: white;
+      color: #1a150e;
       border: none;
       border-radius: 50%;
       width: 32px;
@@ -224,10 +239,12 @@
       justify-content: center;
       cursor: pointer;
       transition: var(--transition);
+      font-weight: 800;
     }
 
     .search-btn:hover {
       background: var(--primary-terra-hover);
+      color: #1a150e;
     }
 
     .cart-btn {
@@ -247,7 +264,7 @@
 
     .cart-btn:hover {
       border-color: var(--primary-terra);
-      color: var(--primary-terra);
+      color: #b45309;
     }
 
     .cart-badge {
@@ -255,7 +272,7 @@
       top: -4px;
       right: -4px;
       background: var(--primary-terra);
-      color: white;
+      color: #1a150e;
       font-size: 0.72rem;
       font-weight: 800;
       width: 18px;
@@ -264,6 +281,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Cart Pop Animation */
+    @keyframes cartBounce {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.45) rotate(-10deg); }
+      70% { transform: scale(1.2) rotate(10deg); }
+      100% { transform: scale(1) rotate(0); }
+    }
+
+    .cart-pop {
+      animation: cartBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     /* =========================
@@ -298,12 +329,88 @@
       padding-bottom: 1rem;
     }
 
+    .cart-header h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
     .close-cart {
       background: none;
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
       color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .close-cart:hover {
+      color: #b45309;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f2e8dc;
+      gap: 0.75rem;
+      animation: fadeInItem 0.25s ease;
+    }
+
+    @keyframes fadeInItem {
+      from {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .cart-item-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 700;
+      color: var(--text-dark);
+      font-size: 0.92rem;
+    }
+
+    .cart-item-price {
+      color: #b45309;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .cart-remove-btn {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      color: #a16207;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      flex-shrink: 0;
+    }
+
+    .cart-remove-btn:hover {
+      background: var(--primary-terra);
+      color: #1a150e;
+      border-color: var(--primary-terra);
+      transform: scale(1.12);
     }
 
     /* =========================
@@ -315,7 +422,9 @@
     }
 
     .hero-card {
-      background-color: var(--card-cream);
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+      border: 2.5px solid #facc15;
+      box-shadow: 0 20px 45px rgba(250, 204, 21, 0.22);
       border-radius: var(--radius-xl);
       padding: 4rem 5rem;
       display: grid;
@@ -325,9 +434,10 @@
     }
 
     .hero-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 3.6rem;
       font-weight: 700;
+      font-style: italic;
       line-height: 1.15;
       color: var(--text-dark);
       margin-bottom: 1.4rem;
@@ -348,21 +458,50 @@
 
     .btn-terra {
       display: inline-block;
-      background-color: var(--primary-terra);
-      color: var(--white);
+      position: relative;
+      overflow: hidden;
+      background: #ffc700;
+      color: #1c1917;
       padding: 0.9rem 2.2rem;
       border-radius: var(--radius-full);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.95rem;
       text-decoration: none;
       transition: var(--transition);
-      border: none;
+      border: 2px solid #eab308;
       cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255, 199, 0, 0.42);
+    }
+
+    .btn-terra::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -70%;
+      width: 45%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 20%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 80%
+      );
+      transform: rotate(25deg);
+      animation: btnShine 4s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes btnShine {
+      0%, 70% { left: -70%; }
+      100% { left: 150%; }
     }
 
     .btn-terra:hover {
-      background-color: var(--primary-terra-hover);
+      background-color: #facc15;
+      color: #1c1917;
+      border-color: #ca8a04;
       transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(234, 179, 8, 0.52);
     }
 
     .btn-outline-dark {
@@ -382,9 +521,57 @@
       background: rgba(0, 0, 0, 0.03);
     }
 
+    /* Hero Staggered Entrance Animations */
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-title {
+      animation: heroFadeUp 0.7s ease-out both;
+    }
+
+    .hero-desc {
+      animation: heroFadeUp 0.7s 0.15s ease-out both;
+    }
+
+    .hero-btns {
+      animation: heroFadeUp 0.7s 0.3s ease-out both;
+    }
+
     .hero-img-wrap {
       display: flex;
       justify-content: center;
+      animation: heroFadeUp 0.8s 0.2s ease-out both;
+    }
+
+    /* Floating Dish Animation */
+    @keyframes gentleFloat {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-10px) rotate(1.2deg);
+      }
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+    }
+
+    /* Warm Pulsing Glow on Featured Dish */
+    @keyframes warmGlow {
+      0%, 100% {
+        box-shadow: 0 20px 45px rgba(60, 35, 15, 0.15), 0 0 20px rgba(255, 199, 0, 0.35);
+      }
+      50% {
+        box-shadow: 0 24px 50px rgba(234, 179, 8, 0.45), 0 0 45px rgba(255, 230, 0, 0.7);
+      }
     }
 
     .hero-dish-img {
@@ -394,6 +581,7 @@
       box-shadow: 0 20px 45px rgba(60, 35, 15, 0.15);
       border: 8px solid var(--white);
       object-fit: cover;
+      animation: gentleFloat 5s ease-in-out infinite, warmGlow 3.5s ease-in-out infinite;
     }
 
     /* =========================
@@ -408,20 +596,24 @@
 
     .badge-pill {
       display: inline-block;
-      background: #ebd8c8;
-      color: var(--primary-terra);
-      font-weight: 700;
+      background: #fef08a;
+      color: #713f12;
+      border: 1.5px solid #facc15;
+      font-weight: 800;
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      padding: 0.35rem 1.1rem;
+      padding: 0.4rem 1.2rem;
       border-radius: var(--radius-full);
       margin-bottom: 0.8rem;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.2);
     }
 
     .section-head h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 2.5rem;
+      font-weight: 700;
+      font-style: italic;
       color: var(--text-dark);
       margin-bottom: 0.5rem;
     }
@@ -455,12 +647,22 @@
       padding: 1.5rem 1.2rem;
       text-align: center;
       box-shadow: var(--shadow-soft);
-      transition: var(--transition);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      /* Scroll Reveal Initial State */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Scroll Reveal Visible State */
+    .menu-card.reveal {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .menu-card::before {
@@ -469,7 +671,7 @@
       top: -12px;
       right: -8px;
       font-size: 4rem;
-      color: rgba(201, 136, 22, 0.08);
+      color: rgba(234, 179, 8, 0.14);
       transform: rotate(15deg);
     }
 
@@ -479,17 +681,61 @@
       border-color: var(--primary-terra);
     }
 
+    .menu-card-img-wrap {
+      width: 100%;
+      height: 160px;
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-card-img-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+      transition: left 0.75s ease;
+      pointer-events: none;
+    }
+
+    .menu-card:hover .menu-card-img-wrap::after {
+      left: 160%;
+    }
+
     .menu-card-img {
       width: 100%;
       height: 160px;
       object-fit: cover;
       border-radius: var(--radius-md);
       margin-bottom: 1rem;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+
+    .menu-card-img-wrap .menu-card-img {
+      height: 100%;
+      margin-bottom: 0;
+    }
+
+    .menu-card:hover .menu-card-img {
+      transform: scale(1.05);
     }
 
     .menu-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-style: italic;
       color: var(--text-dark);
       margin-bottom: 0.5rem;
     }
@@ -502,20 +748,35 @@
     }
 
     .add-to-cart-btn {
-      background: var(--primary-terra);
-      color: white;
-      border: none;
+      background: #ffc700;
+      color: #1c1917;
+      border: 1.5px solid #eab308;
       border-radius: var(--radius-full);
-      padding: 0.45rem 1rem;
+      padding: 0.5rem 1.15rem;
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       transition: var(--transition);
       align-self: center;
+      box-shadow: 0 4px 14px rgba(255, 199, 0, 0.35);
     }
 
     .add-to-cart-btn:hover {
-      background: var(--primary-terra-hover);
+      background: #facc15;
+      color: #1c1917;
+      border-color: #ca8a04;
+      transform: scale(1.04);
+      box-shadow: 0 6px 18px rgba(234, 179, 8, 0.48);
+    }
+
+    .add-to-cart-btn:active {
+      transform: scale(0.96);
+    }
+
+    .add-to-cart-btn.added {
+      background-color: #27ae60 !important;
+      transform: scale(0.96);
+      pointer-events: none;
     }
 
     /* =========================
@@ -523,7 +784,9 @@
     ========================== */
 
     .about-section {
-      background: var(--card-cream);
+      background: linear-gradient(135deg, #fffbeb 0%, #fef9c3 100%);
+      border: 2px solid #fde047;
+      box-shadow: 0 16px 36px rgba(250, 204, 21, 0.16);
       padding: 5rem 6%;
       border-radius: var(--radius-xl);
       margin: 2rem 6% 4rem;
@@ -571,8 +834,9 @@
 
     .mv-label {
       display: inline-block;
-      color: var(--primary-terra);
-      background: #f7e4d5;
+      color: #713f12;
+      background: #fef08a;
+      border: 1.5px solid #facc15;
       padding: 0.35rem 1rem;
       border-radius: var(--radius-full);
       font-size: 0.78rem;
@@ -580,11 +844,14 @@
       text-transform: uppercase;
       letter-spacing: 1.2px;
       margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.2);
     }
 
     .mv-card h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.8rem;
+      font-weight: 700;
+      font-style: italic;
       margin-bottom: 0.8rem;
       color: var(--text-dark);
     }
@@ -628,22 +895,33 @@
 
     .faq-question span.toggle-icon {
       font-size: 1.5rem;
-      color: var(--primary-terra);
+      color: #b45309;
       transition: var(--transition);
       line-height: 1;
     }
 
     .faq-answer {
-      display: none;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       background: #faf6f0;
-      padding: 0 1.8rem 1.4rem;
       color: var(--text-muted);
       font-size: 0.98rem;
       line-height: 1.7;
     }
 
+    .faq-answer-inner {
+      overflow: hidden;
+      padding: 0 1.8rem;
+      transition: padding 0.35s ease;
+    }
+
     .faq-item.active .faq-answer {
-      display: block;
+      grid-template-rows: 1fr;
+    }
+
+    .faq-item.active .faq-answer-inner {
+      padding: 0.8rem 1.8rem 1.4rem;
     }
 
     .faq-item.active .toggle-icon {
@@ -651,33 +929,316 @@
     }
 
     /* =========================
-       CONTACT
+       REVIEWS SECTION (TOP OF CONTACT)
     ========================== */
 
-    .link-area {
-      padding: 3rem 6% 6rem;
-      max-width: 800px;
+    .reviews-section {
+      padding: 5rem 6%;
+      max-width: 1320px;
       margin: 0 auto;
+    }
+
+    .reviews-section .section-title {
+      text-align: center;
+      margin-bottom: 2.8rem;
+    }
+
+    .testimonial-script {
+      font-family: 'Caveat', cursive;
+      font-size: 2.5rem;
+      color: #713f12;
+      line-height: 1;
+      margin-top: 0.5rem;
+    }
+
+    .testimonial-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin: 0.2rem 0 0.5rem;
+    }
+
+    .testimonial-sub {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* CAROUSEL WRAPPER & CONTROLS */
+    .reviews-carousel-container {
+      position: relative;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 4px;
+    }
+
+    .reviews-carousel-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .reviews-nav-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ffc700;
+      border: 2px solid #eab308;
+      color: #1c1917;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(255, 199, 0, 0.35);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      flex-shrink: 0;
+      z-index: 5;
+    }
+
+    .reviews-nav-btn:hover {
+      background: #ffe033;
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 10px 24px rgba(234, 179, 8, 0.45);
+    }
+
+    .reviews-nav-btn:active {
+      transform: scale(0.95);
+    }
+
+    .reviews-carousel-viewport {
+      overflow: hidden;
+      flex: 1;
+      padding: 18px 6px;
+      position: relative;
+    }
+
+    .reviews-track {
+      display: flex;
+      gap: 22px;
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    /* PORTRAIT REVIEW CARD STYLES */
+    .reviews-track .review-card {
+      flex: 0 0 calc((100% - (22px * 2)) / 3);
+      min-height: 290px;
+      border-radius: 24px;
+      padding: 1.8rem 1.6rem 1.4rem;
+      transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+
+    .review-card.yellow-card {
+      background: #ffc700;
+      border: 1.5px solid #eab308;
+      box-shadow: 0 10px 24px rgba(255, 199, 0, 0.28);
+      color: #1c1917;
+      transform: rotate(-0.5deg);
+    }
+
+    .review-card.white-card {
+      background: #ffffff;
+      border: 1px solid #ebd9c7;
+      box-shadow: 0 10px 24px rgba(70, 45, 25, 0.06);
+      color: #1c1917;
+      transform: rotate(0.5deg);
+    }
+
+    .review-card:hover {
+      transform: translateY(-6px) scale(1.02) rotate(0deg) !important;
+      box-shadow: 0 18px 38px rgba(250, 204, 21, 0.38);
+      z-index: 2;
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .review-user-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .review-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.55rem;
+      border: 2px solid #fff;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+
+    .yellow-card .review-avatar {
+      background: #fffdf5;
+      border-color: #ffffff;
+    }
+
+    .review-user-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .review-customer-name {
+      font-weight: 800;
+      font-size: 0.92rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #1c1917;
+    }
+
+    .review-customer-handle {
+      font-size: 0.78rem;
+      color: #57534e;
+      word-break: break-all;
+    }
+
+    .yellow-card .review-customer-handle {
+      color: #452a05;
+      opacity: 0.85;
+    }
+
+    .review-stars-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 1.05rem;
+      color: #ffc700;
+      letter-spacing: 1.5px;
+    }
+
+    .yellow-card .review-stars-pill {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 4px 12px;
+      border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      color: #ffb703;
+    }
+
+    .white-card .review-stars-pill {
+      padding: 4px 0;
+    }
+
+    .review-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.55;
+      color: #1c1917;
+      padding-left: 2px;
+      margin: 0.6rem 0 auto;
+    }
+
+    .review-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.4rem;
+      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(28, 25, 23, 0.15);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #57534e;
+    }
+
+    .yellow-card .review-card-footer {
+      border-top-color: rgba(69, 42, 5, 0.2);
+      color: #452a05;
+    }
+
+    .review-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #15803d;
+    }
+
+    .yellow-card .review-verified-badge {
+      color: #14532d;
+    }
+
+    /* CAROUSEL DOTS */
+    .reviews-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1.8rem;
+    }
+
+    .review-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e7d8c7;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+      padding: 0;
+    }
+
+    .review-dot.active {
+      width: 28px;
+      border-radius: 999px;
+      background: #ffc700;
+      box-shadow: 0 2px 8px rgba(255, 199, 0, 0.5);
+    }
+
+    .review-dot:hover:not(.active) {
+      background: #ca8a04;
+    }
+
+    /* =========================
+       CONTACT SECTION (BELOW REVIEWS)
+    ========================== */
+
+    .contact-section {
+      padding: 2rem 6% 6rem;
       text-align: center;
     }
 
-    .link-area h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--text-dark);
+    .contact-section .section-title {
+      margin-bottom: 2.2rem;
     }
 
-    .link-area p.contact-info {
-      font-size: 1.1rem;
+    .section-title h2,
+    .contact-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info {
       color: var(--text-muted);
-      margin-bottom: 2rem;
+      font-size: 1.05rem;
+      margin-top: 0.8rem;
+      line-height: 1.6;
     }
 
     .link-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+      max-width: 520px;
+      margin: 0 auto;
     }
 
     .link-item {
@@ -685,23 +1246,24 @@
       align-items: center;
       justify-content: center;
       gap: 14px;
-      padding: 1rem;
+      padding: 1.1rem;
       border-radius: var(--radius-md);
       background: var(--white);
       border: 1px solid #ebd9c7;
       text-decoration: none;
       color: #241e19;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1rem;
       transition: var(--transition);
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 4px 14px rgba(70, 45, 25, 0.04);
     }
 
     .link-item:hover {
-      background: var(--card-cream);
-      border-color: var(--primary-terra);
+      background: #fef9c3;
+      border-color: #facc15;
       transform: translateY(-3px);
-      color: var(--primary-terra);
+      color: #713f12;
+      box-shadow: 0 8px 22px rgba(250, 204, 21, 0.25);
     }
 
     .link-item svg {
@@ -726,6 +1288,15 @@
       height: 58px;
       border-radius: 50%;
       margin-bottom: 0.8rem;
+    }
+
+    footer h4 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
     }
 
     /* =========================
@@ -753,7 +1324,6 @@
     }
 
     @media (max-width: 990px) {
-
       .nav-menu {
         display: none;
       }
@@ -791,10 +1361,22 @@
       .mission-vision {
         grid-template-columns: 1fr;
       }
+
+      .reviews-track .review-card {
+        flex: 0 0 calc((100% - 22px) / 2);
+      }
+
+      .reviews-carousel-wrapper {
+        gap: 12px;
+      }
+
+      .reviews-nav-btn {
+        width: 44px;
+        height: 44px;
+      }
     }
 
     @media (max-width: 700px) {
-
       .header {
         padding: 0.8rem 4%;
       }
@@ -894,14 +1476,36 @@
       }
 
       .faq-section,
-      .link-area {
+      .reviews-section,
+      .contact-section {
         padding-left: 4%;
         padding-right: 4%;
+      }
+
+      .testimonial-title {
+        font-size: 2.2rem;
+      }
+
+      .testimonial-script {
+        font-size: 2.1rem;
+      }
+
+      .reviews-track .review-card {
+        flex: 0 0 100%;
+        min-height: 260px;
+      }
+
+      .reviews-carousel-wrapper {
+        gap: 8px;
+      }
+
+      .reviews-nav-btn {
+        width: 38px;
+        height: 38px;
       }
     }
 
     @media (max-width: 480px) {
-
       .header-actions {
         gap: 6px;
       }
@@ -930,6 +1534,312 @@
       .cart-sidebar {
         width: 85%;
       }
+
+      .chatbot-window {
+        bottom: 85px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-width: none;
+        height: 430px;
+      }
+    }
+
+    /* =========================
+       CHATBOT WIDGET
+    ========================== */
+
+    .chatbot-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #ffc700;
+      color: #1c1917;
+      border: 3px solid var(--white);
+      box-shadow: 0 8px 25px rgba(255, 199, 0, 0.55);
+      cursor: pointer;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1) translateY(-3px);
+      box-shadow: 0 12px 30px rgba(234, 179, 8, 0.7);
+    }
+
+    .chatbot-toggle .chat-badge-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      background: #27ae60;
+      border: 2px solid white;
+      border-radius: 50%;
+    }
+
+    .chatbot-window {
+      position: fixed;
+      bottom: 92px;
+      right: 24px;
+      width: 350px;
+      max-width: calc(100vw - 32px);
+      height: 480px;
+      max-height: calc(100vh - 110px);
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 16px 45px rgba(60, 35, 15, 0.25);
+      border: 1px solid #ebd9c7;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px) scale(0.95);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .chatbot-window.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .chatbot-header {
+      background: linear-gradient(135deg, #ffc700, #facc15);
+      color: #1c1917;
+      border-bottom: 2px solid #eab308;
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .chatbot-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .chatbot-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1a150e;
+      line-height: 1.2;
+    }
+
+    .chatbot-status {
+      font-size: 0.75rem;
+      color: #452a05;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .chatbot-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #2ecc71;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .chatbot-close {
+      background: none;
+      border: none;
+      color: #1a150e;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    .chatbot-close:hover {
+      opacity: 1;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #faf7f2;
+    }
+
+    .chat-msg {
+      max-width: 84%;
+      padding: 0.75rem 0.95rem;
+      border-radius: 16px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      word-wrap: break-word;
+      animation: msgPop 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @keyframes msgPop {
+      from { opacity: 0; transform: translateY(8px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .chat-msg.bot {
+      background: var(--white);
+      color: var(--text-dark);
+      border: 1px solid #ebdacf;
+      border-bottom-left-radius: 4px;
+      align-self: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .chat-msg.user {
+      background: var(--primary-terra);
+      color: #1a150e;
+      font-weight: 600;
+      border-bottom-right-radius: 4px;
+      align-self: flex-end;
+    }
+
+    .chat-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .chat-chip {
+      background: var(--white);
+      border: 1px solid #fde047;
+      color: #a16207;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chat-chip:hover {
+      background: var(--primary-terra);
+      color: #1a150e;
+      border-color: var(--primary-terra);
+      transform: translateY(-1px);
+    }
+
+    .chat-inline-btn {
+      display: inline-block;
+      margin-top: 6px;
+      background: var(--primary-terra);
+      color: #1a150e;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .chat-inline-btn:hover {
+      background: var(--primary-terra-hover);
+      color: #1a150e;
+    }
+
+    .chat-typing {
+      display: none;
+      align-self: flex-start;
+      background: var(--white);
+      border: 1px solid #ebdacf;
+      padding: 0.6rem 0.9rem;
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .chat-typing span {
+      width: 6px;
+      height: 6px;
+      background: var(--primary-terra);
+      border-radius: 50%;
+      animation: typingBlink 1.4s infinite ease-in-out;
+      opacity: 0.4;
+    }
+
+    .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBlink {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .chatbot-input-area {
+      display: flex;
+      padding: 0.7rem 0.8rem;
+      background: var(--white);
+      border-top: 1px solid #f0e1d2;
+      gap: 8px;
+    }
+
+    .chatbot-input {
+      flex: 1;
+      border: 1.5px solid #ebd9c7;
+      border-radius: var(--radius-full);
+      padding: 0.55rem 1rem;
+      font-size: 0.86rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+      font-family: inherit;
+    }
+
+    .chatbot-input:focus {
+      border-color: var(--primary-terra);
+    }
+
+    .chatbot-send {
+      background: var(--primary-terra);
+      color: #1a150e;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .chatbot-send:hover {
+      background: var(--primary-terra-hover);
+      transform: scale(1.08);
     }
   </style>
 </head>
@@ -943,17 +1853,14 @@
   <header class="header">
 
     <a href="#" class="brand">
-
       <img
         src="https://i.postimg.cc/d19gd6xk/b96b4a6c-beb6-4f22-9395-75a6fc93a3f5.jpg"
         alt="Creamy Crown Egg Logo"
         class="brand-logo"
       />
-
       <div class="brand-text">
         <h1>CREAMY CROWN EGG</h1>
       </div>
-
     </a>
 
     <!-- DESKTOP NAVIGATION -->
@@ -962,6 +1869,7 @@
       <li><a href="#menu">Menu</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#faq">FAQ</a></li>
+      <li><a href="#reviews">Reviews</a></li>
       <li><a href="#links">Contact</a></li>
     </ul>
 
@@ -1045,27 +1953,12 @@
   ========================== -->
 
   <div class="mobile-menu" id="mobileMenu">
-
-    <a href="#" onclick="closeMobileMenu()">
-      Home
-    </a>
-
-    <a href="#menu" onclick="closeMobileMenu()">
-      Menu
-    </a>
-
-    <a href="#about" onclick="closeMobileMenu()">
-      About
-    </a>
-
-    <a href="#faq" onclick="closeMobileMenu()">
-      FAQ
-    </a>
-
-    <a href="#links" onclick="closeMobileMenu()">
-      Contact
-    </a>
-
+    <a href="#" onclick="closeMobileMenu()">Home</a>
+    <a href="#menu" onclick="closeMobileMenu()">Menu</a>
+    <a href="#about" onclick="closeMobileMenu()">About</a>
+    <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+    <a href="#reviews" onclick="closeMobileMenu()">Reviews</a>
+    <a href="#links" onclick="closeMobileMenu()">Contact</a>
   </div>
 
 
@@ -1076,9 +1969,7 @@
   <div class="cart-sidebar" id="cartSidebar">
 
     <div class="cart-header">
-
       <h3>Your Cart 🛒</h3>
-
       <button
         class="close-cart"
         onclick="toggleCart()"
@@ -1086,19 +1977,25 @@
       >
         &times;
       </button>
-
     </div>
 
     <div
       id="cartItems"
-      style="flex: 1; color: var(--text-muted); font-size: 0.9rem;"
+      style="flex: 1; overflow-y: auto; color: var(--text-muted); font-size: 0.9rem; padding-right: 4px;"
     >
-      Your cart is empty.
+      <p style="text-align: center; margin-top: 2rem;">Your cart is empty.</p>
+    </div>
+
+    <div id="cartSummary" style="display: none; padding-top: 1rem; border-top: 1px solid #f0e2d5; margin-top: 1rem;">
+      <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.05rem; color: var(--text-dark); margin-bottom: 0.4rem;">
+        <span>Total:</span>
+        <span id="cartTotalText" style="color: #b45309; font-weight: 800;">₱0</span>
+      </div>
     </div>
 
     <button
       class="btn-terra"
-      style="width: 100%; text-align: center; margin-top: 1rem;"
+      style="width: 100%; text-align: center; margin-top: 0.8rem;"
       onclick="checkout()"
     >
       Checkout
@@ -1128,27 +2025,22 @@
         </p>
 
         <div class="hero-btns">
-
           <a href="#menu" class="btn-terra">
             Explore Menu
           </a>
-
           <a href="#about" class="btn-outline-dark">
             Our Story
           </a>
-
         </div>
 
       </div>
 
       <div class="hero-img-wrap">
-
         <img
           src="https://i.postimg.cc/4N0vXzF8/825260912-28068494169518627-3522917729317923020-n.jpg"
           alt="Signature Creamy Crown Egg Cup"
           class="hero-dish-img"
         />
-
       </div>
 
     </section>
@@ -1163,146 +2055,127 @@
   <section class="dishes-section" id="menu">
 
     <div class="section-head">
-
       <span class="badge-pill">
         Our Menu
       </span>
-
       <h2>
         Royal Signature Flavors
       </h2>
-
       <p>
         Five delicious combinations created to turn a simple egg
         into an unforgettable street-food experience.
       </p>
-
     </div>
 
     <div class="menu-grid">
 
       <!-- CLASSIC -->
       <article class="menu-card">
-
-        <img
-          src="https://i.postimg.cc/yJNJsQZM/825309678-1403590994548999-2002702237790290058-n.jpg"
-          alt="Classic Creamy Crown Egg"
-          class="menu-card-img"
-        />
-
+        <div class="menu-card-img-wrap">
+          <img
+            src="https://i.postimg.cc/yJNJsQZM/825309678-1403590994548999-2002702237790290058-n.jpg"
+            alt="Classic Creamy Crown Egg"
+            class="menu-card-img"
+          />
+        </div>
         <h3>Classic</h3>
-
         <p>
           Velvety seasoned yolk whipped to perfection with a dash of fresh herbs.
         </p>
-
         <button
           class="add-to-cart-btn"
-          onclick="addToCart('Classic')"
+          onclick="addToCart('Classic', this)"
         >
           Add to Cart - ₱35
         </button>
-
       </article>
 
 
       <!-- CHEESY BACON -->
       <article class="menu-card">
-
-        <img
-          src="https://i.postimg.cc/4N0vXzF8/825260912-28068494169518627-3522917729317923020-n.jpg"
-          alt="Cheesy Bacon Creamy Crown Egg"
-          class="menu-card-img"
-        />
-
+        <div class="menu-card-img-wrap">
+          <img
+            src="https://i.postimg.cc/4N0vXzF8/825260912-28068494169518627-3522917729317923020-n.jpg"
+            alt="Cheesy Bacon Creamy Crown Egg"
+            class="menu-card-img"
+          />
+        </div>
         <h3>Cheesy Bacon</h3>
-
         <p>
           Creamy yolk whip loaded with shredded cheddar cheese and savory crispy bacon.
         </p>
-
         <button
           class="add-to-cart-btn"
-          onclick="addToCart('Cheesy Bacon')"
+          onclick="addToCart('Cheesy Bacon', this)"
         >
           Add to Cart - ₱35
         </button>
-
       </article>
 
 
       <!-- SPINACH CHEESE -->
       <article class="menu-card">
-
-        <img
-          src="https://i.postimg.cc/xJwqG94f/825260912-28068494169518627-3522917729317923020-n.jpg"
-          alt="Spinach Cheese Creamy Crown Egg"
-          class="menu-card-img"
-        />
-
+        <div class="menu-card-img-wrap">
+          <img
+            src="https://i.postimg.cc/xJwqG94f/825260912-28068494169518627-3522917729317923020-n.jpg"
+            alt="Spinach Cheese Creamy Crown Egg"
+            class="menu-card-img"
+          />
+        </div>
         <h3>Spinach Cheese</h3>
-
         <p>
           A rich creamed spinach and melted cheese blend atop a golden egg cup.
         </p>
-
         <button
           class="add-to-cart-btn"
-          onclick="addToCart('Spinach Cheese')"
+          onclick="addToCart('Spinach Cheese', this)"
         >
           Add to Cart - ₱35
         </button>
-
       </article>
 
 
       <!-- GARLIC PARMESAN -->
       <article class="menu-card">
-
-        <img
-          src="https://i.postimg.cc/zLS128vr/825310427-1802599617408300-663511174159607183-n.jpg"
-          alt="Garlic Parmesan Creamy Crown Egg"
-          class="menu-card-img"
-        />
-
+        <div class="menu-card-img-wrap">
+          <img
+            src="https://i.postimg.cc/zLS128vr/825310427-1802599617408300-663511174159607183-n.jpg"
+            alt="Garlic Parmesan Creamy Crown Egg"
+            class="menu-card-img"
+          />
+        </div>
         <h3>Garlic Parmesan</h3>
-
         <p>
           Aromatic garlic and rich parmesan cheese dusted over smooth yolk whip.
         </p>
-
         <button
           class="add-to-cart-btn"
-          onclick="addToCart('Garlic Parmesan')"
+          onclick="addToCart('Garlic Parmesan', this)"
         >
           Add to Cart - ₱35
         </button>
-
       </article>
 
 
       <!-- SPICY BARBEQUE -->
       <article class="menu-card">
-
-        <img
-          src="https://i.postimg.cc/jW9jKsKj/825260989-1620178802805415-1235550763634545801-n.jpg"
-          alt="Spicy Barbeque Creamy Crown Egg"
-          class="menu-card-img"
-        />
-
+        <div class="menu-card-img-wrap">
+          <img
+            src="https://i.postimg.cc/jW9jKsKj/825260989-1620178802805415-1235550763634545801-n.jpg"
+            alt="Spicy Barbeque Creamy Crown Egg"
+            class="menu-card-img"
+          />
+        </div>
         <h3>Spicy Barbeque</h3>
-
         <p>
           Smoky BBQ sauce glaze paired with chili flakes for a sweet and spicy kick.
         </p>
-
         <button
           class="add-to-cart-btn"
-          onclick="addToCart('Spicy Barbeque')"
+          onclick="addToCart('Spicy Barbeque', this)"
         >
           Add to Cart - ₱35
         </button>
-
       </article>
 
     </div>
@@ -1333,46 +2206,32 @@
       barbecue glaze, every bite is crafted to satisfy your cravings.
     </p>
 
-
     <div class="mission-vision">
 
       <div class="mv-card">
-
         <span class="mv-label">
           Our Mission
         </span>
-
-        <h3>
-          Mission
-        </h3>
-
+        <h3>Mission</h3>
         <p>
           To provide high-quality, innovative, and accessible food
           products that deliver satisfying customer experiences
           through exceptional taste, consistent quality, and
           creative product development.
         </p>
-
       </div>
 
-
       <div class="mv-card">
-
         <span class="mv-label">
           Our Vision
         </span>
-
-        <h3>
-          Vision
-        </h3>
-
+        <h3>Vision</h3>
         <p>
           To become a trusted and recognized food business known
           for innovation, quality, affordability, and continuous
           product development that responds to evolving consumer
           preferences.
         </p>
-
       </div>
 
     </div>
@@ -1391,142 +2250,89 @@
   <section class="faq-section" id="faq">
 
     <div class="section-head">
-
       <span class="badge-pill">
         Got Questions?
       </span>
-
       <h2>
         Frequently Asked Questions
       </h2>
-
     </div>
 
-
     <div class="faq-item">
-
-      <div
-        class="faq-question"
-        onclick="toggleFaq(this)"
-      >
-        <span>
-          What exactly is a Creamy Crown Egg?
-        </span>
-
-        <span class="toggle-icon">
-          +
-        </span>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What exactly is a Creamy Crown Egg?</span>
+        <span class="toggle-icon">+</span>
       </div>
-
       <div class="faq-answer">
-        It is a gourmet twist on crispy deviled eggs! We take
-        hard-boiled eggs, give them an airy panko crunch shell,
-        and fill them with silky whipped yolk blended with special
-        seasoning and flavorful toppings.
+        <div class="faq-answer-inner">
+          It is a gourmet twist on crispy deviled eggs! We take
+          hard-boiled eggs, give them an airy panko crunch shell,
+          and fill them with silky whipped yolk blended with special
+          seasoning and flavorful toppings.
+        </div>
       </div>
-
     </div>
 
-
     <div class="faq-item">
-
-      <div
-        class="faq-question"
-        onclick="toggleFaq(this)"
-      >
-        <span>
-          What flavors are available?
-        </span>
-
-        <span class="toggle-icon">
-          +
-        </span>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What flavors are available?</span>
+        <span class="toggle-icon">+</span>
       </div>
-
       <div class="faq-answer">
-        We currently offer five Royal Signature Flavors:
-        <strong>
-          Classic, Cheesy Bacon, Spinach Cheese,
-          Garlic Parmesan, and Spicy Barbeque.
-        </strong>
+        <div class="faq-answer-inner">
+          We currently offer five Royal Signature Flavors:
+          <strong>
+            Classic, Cheesy Bacon, Spinach Cheese,
+            Garlic Parmesan, and Spicy Barbeque.
+          </strong>
+        </div>
       </div>
-
     </div>
 
-
     <div class="faq-item">
-
-      <div
-        class="faq-question"
-        onclick="toggleFaq(this)"
-      >
-        <span>
-          How much does it cost?
-        </span>
-
-        <span class="toggle-icon">
-          +
-        </span>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>How much does it cost?</span>
+        <span class="toggle-icon">+</span>
       </div>
-
       <div class="faq-answer">
-        Our individual signature flavors are just
-        <strong>₱35 per cup</strong>.
-        We also offer the
-        <strong>Crown Trio Box (3 pcs) for ₱100</strong>
-        and
-        <strong>Party Platters (5 pcs) for ₱170</strong>.
+        <div class="faq-answer-inner">
+          Our individual signature flavors are just
+          <strong>₱35 per cup</strong>.
+          We also offer the
+          <strong>Crown Trio Box (3 pcs) for ₱100</strong>
+          and
+          <strong>Party Platters (5 pcs) for ₱170</strong>.
+        </div>
       </div>
-
     </div>
 
-
     <div class="faq-item">
-
-      <div
-        class="faq-question"
-        onclick="toggleFaq(this)"
-      >
-        <span>
-          Can I pre-order for events or parties?
-        </span>
-
-        <span class="toggle-icon">
-          +
-        </span>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Can I pre-order for events or parties?</span>
+        <span class="toggle-icon">+</span>
       </div>
-
       <div class="faq-answer">
-        Yes! We welcome party boxes and bulk orders.
-        Simply call us at <strong>09603794271</strong>
-        or message us through our social media channels.
+        <div class="faq-answer-inner">
+          Yes! We welcome party boxes and bulk orders.
+          Simply call us at <strong>09603794271</strong>
+          or message us through our social media channels.
+        </div>
       </div>
-
     </div>
 
-
     <div class="faq-item">
-
-      <div
-        class="faq-question"
-        onclick="toggleFaq(this)"
-      >
-        <span>
-          Where are you located?
-        </span>
-
-        <span class="toggle-icon">
-          +
-        </span>
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>Where are you located?</span>
+        <span class="toggle-icon">+</span>
       </div>
-
       <div class="faq-answer">
-        You can find Creamy Crown Egg at
-        <strong>F Legaspi St. Ugong, Pasig City.</strong>
-        For orders, availability, and inquiries, please contact us at
-        <strong>09603794271</strong>.
+        <div class="faq-answer-inner">
+          You can find Creamy Crown Egg at
+          <strong>F Legaspi St. Ugong, Pasig City.</strong>
+          For orders, availability, and inquiries, please contact us at
+          <strong>09603794271</strong>.
+        </div>
       </div>
-
     </div>
 
   </section>
@@ -1536,111 +2342,371 @@
        CONTACT SECTION
   ========================== -->
 
-  <section class="link-area" id="links">
+  <!-- =========================
+       REVIEWS SECTION (TOP OF CONTACT)
+  ========================== -->
 
-    <span class="badge-pill">
-      Contact Us
-    </span>
-
-    <h3>
-      Get In Touch
-    </h3>
-
-    <p class="contact-info">
-      📍 <strong>F Legaspi St. Ugong, Pasig City</strong>
-      &nbsp;|&nbsp;
-      📞 <strong>09603794271</strong>
-    </p>
-
-
-    <div class="link-list">
-
-      <!-- FACEBOOK -->
-      <a
-        href="https://www.facebook.com/share/1ESGPJsftj/"
-        target="_blank"
-        rel="noopener"
-        class="link-item"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.19 22 12z"/>
-        </svg>
-
-        <span>
-          Facebook: Creamy Crown Egg
-        </span>
-      </a>
-
-
-      <!-- INSTAGRAM -->
-      <a
-        href="https://www.instagram.com/creamycrownegg"
-        target="_blank"
-        rel="noopener"
-        class="link-item"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.28-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-        </svg>
-
-        <span>
-          Instagram: @creamycrownegg
-        </span>
-      </a>
-
-
-      <!-- TIKTOK -->
-      <a
-        href="https://www.tiktok.com/@creamy.crown.egg2"
-        target="_blank"
-        rel="noopener"
-        class="link-item"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.32a6.34 6.34 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.27 8.27 0 0 0 5.17 1.83V7.43a4.83 4.83 0 0 1-1.4-.74z"/>
-        </svg>
-
-        <span>
-          TikTok: @creamy.crown.egg2
-        </span>
-      </a>
-
-
-      <!-- PINTEREST -->
-      <a
-        href="https://www.pinterest.com/pin/2EuIgeGOg/"
-        target="_blank"
-        rel="noopener"
-        class="link-item"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
-        </svg>
-
-        <span>
-          Pinterest: Creamy Crown Egg
-        </span>
-      </a>
-
-
-      <!-- X -->
-      <a
-        href="https://x.com/creamycrown_"
-        target="_blank"
-        rel="noopener"
-        class="link-item"
-      >
-        <svg viewBox="0 0 24 24">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-
-        <span>
-          X (Twitter): @creamycrown_
-        </span>
-      </a>
-
+  <section class="reviews-section container" id="reviews">
+    <div class="section-title">
+      <span class="badge-pill">Verified Reviews</span>
+      <div class="testimonial-script">Customer Testimonial</div>
+      <h2 class="testimonial-title">What They Say?</h2>
+      <p class="testimonial-sub">Real words from our wonderful Creamy Crown Egg foodies 💛</p>
     </div>
 
+    <!-- CAROUSEL WRAPPER WITH LEFT & RIGHT ARROWS -->
+    <div class="reviews-carousel-container">
+      <div class="reviews-carousel-wrapper">
+
+        <!-- PREVIOUS (LEFT) ARROW -->
+        <button
+          class="reviews-nav-btn prev-btn"
+          id="reviewsPrevBtn"
+          onclick="slideReviews(-1)"
+          aria-label="Previous Review"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- CAROUSEL VIEWPORT -->
+        <div class="reviews-carousel-viewport" id="reviewsViewport">
+          <div class="reviews-track" id="reviewsTrack">
+
+            <!-- REVIEW 1 -->
+            <article class="review-card yellow-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 23</span>
+                    <span class="review-customer-handle">loa*******zkyle14@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">it tastes sooo good</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 2 -->
+            <article class="review-card white-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 15</span>
+                    <span class="review-customer-handle">Customers</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">first time ko makatry ng ganto and its good! 💖</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 3 -->
+            <article class="review-card yellow-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 11</span>
+                    <span class="review-customer-handle">mar********omay9@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">continue to develop your product this has so much potential, I LOVE ITT</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 4 -->
+            <article class="review-card white-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 18</span>
+                    <span class="review-customer-handle">min*****emania@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">U can actually sell this, I'd definitely buy :))</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 5 -->
+            <article class="review-card yellow-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 24</span>
+                    <span class="review-customer-handle">castan*****azel16@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">It's very creamy and addicting to eat</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 6 -->
+            <article class="review-card white-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 8</span>
+                    <span class="review-customer-handle">thes*******aries.mercurio@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">Well, the is egg good as itself but the flavor and the way it cook is good the smel is good aswel the saltines of the dish is perfect</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 7 -->
+            <article class="review-card yellow-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 5</span>
+                    <span class="review-customer-handle">atie*****nalyn646@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">yummy,it doesn' taste like egg. it tastes like fish filet</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 8 -->
+            <article class="review-card white-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 18</span>
+                    <span class="review-customer-handle">f******asojot@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">Masarap po siya</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 9 -->
+            <article class="review-card yellow-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 32</span>
+                    <span class="review-customer-handle">malap****ynar7@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">Ok naman yung lasa sakto at balanse lang</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 10 -->
+            <article class="review-card white-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 20</span>
+                    <span class="review-customer-handle">kazumicollado@gmail.com</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">masarap tlga</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 11 -->
+            <article class="review-card yellow-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 29</span>
+                    <span class="review-customer-handle">Customers</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">it satisfied my cravingsss!</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+            <!-- REVIEW 12 -->
+            <article class="review-card white-card">
+              <div class="review-top">
+                <div class="review-user-group">
+                  <div class="review-avatar">🐥</div>
+                  <div class="review-user-meta">
+                    <span class="review-customer-name">CUSTOMER # 4</span>
+                    <span class="review-customer-handle">Customers</span>
+                  </div>
+                </div>
+                <div class="review-stars-pill">★★★★★</div>
+              </div>
+              <p class="review-text">10/10</p>
+              <div class="review-card-footer">
+                <span class="review-verified-badge">✔ Verified Review</span>
+                <span class="review-tag-badge">Creamy Crown Egg</span>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- NEXT (RIGHT) ARROW -->
+        <button
+          class="reviews-nav-btn next-btn"
+          id="reviewsNextBtn"
+          onclick="slideReviews(1)"
+          aria-label="Next Review"
+        >
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- CAROUSEL DOTS INDICATORS -->
+      <div class="reviews-dots" id="reviewsDots"></div>
+    </div>
+  </section>
+
+
+  <!-- =========================
+       CONTACT SECTION
+  ========================== -->
+
+  <section class="contact-section container" id="links">
+    <div class="section-title">
+      <span class="badge-pill">Contact Us</span>
+      <h2>Get In Touch</h2>
+      <p class="contact-info">
+        📍 <strong>F Legaspi St. Ugong, Pasig City</strong><br>
+        📞 <strong>09603794271</strong>
+      </p>
+    </div>
+
+          <div class="link-list">
+
+            <!-- FACEBOOK -->
+            <a
+              href="https://www.facebook.com/share/1ESGPJsftj/"
+              target="_blank"
+              rel="noopener"
+              class="link-item"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.19 22 12z"/>
+              </svg>
+              <span>Facebook: Creamy Crown Egg</span>
+            </a>
+
+            <!-- INSTAGRAM -->
+            <a
+              href="https://www.instagram.com/creamycrownegg"
+              target="_blank"
+              rel="noopener"
+              class="link-item"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.28-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              <span>Instagram: @creamycrownegg</span>
+            </a>
+
+            <!-- TIKTOK -->
+            <a
+              href="https://www.tiktok.com/@creamy.crown.egg2"
+              target="_blank"
+              rel="noopener"
+              class="link-item"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.32a6.34 6.34 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 0 0 0 6.34-6.34V9.05a8.27 8.27 0 0 0 5.17 1.83V7.43a4.83 4.83 0 0 1-1.4-.74z"/>
+              </svg>
+              <span>TikTok: @creamy.crown.egg2</span>
+            </a>
+
+            <!-- PINTEREST -->
+            <a
+              href="https://www.pinterest.com/pin/2EuIgeGOg/"
+              target="_blank"
+              rel="noopener"
+              class="link-item"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+              </svg>
+              <span>Pinterest: Creamy Crown Egg</span>
+            </a>
+
+            <!-- X -->
+            <a
+              href="https://x.com/creamycrown_"
+              target="_blank"
+              rel="noopener"
+              class="link-item"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              <span>X (Twitter): @creamycrown_</span>
+            </a>
+
+    </div>
   </section>
 
 
@@ -1657,8 +2723,9 @@
 
     <h4
       style="
-        font-family:'Playfair Display', serif;
-        font-size:1.25rem;
+        font-family:'Playfair Display', Georgia, serif;
+        font-style: italic;
+        font-size:1.35rem;
         margin-bottom:0.3rem;
       "
     >
@@ -1698,7 +2765,6 @@
     ========================== */
 
     function toggleMobileMenu() {
-
       const menu = document.getElementById("mobileMenu");
       const button = document.getElementById("menuToggle");
 
@@ -1706,14 +2772,10 @@
       button.classList.toggle("active");
 
       const isOpen = menu.classList.contains("open");
-
       button.setAttribute("aria-expanded", isOpen);
-
     }
 
-
     function closeMobileMenu() {
-
       const menu = document.getElementById("mobileMenu");
       const button = document.getElementById("menuToggle");
 
@@ -1721,7 +2783,6 @@
       button.classList.remove("active");
 
       button.setAttribute("aria-expanded", "false");
-
     }
 
 
@@ -1730,61 +2791,103 @@
     ========================== */
 
     function toggleFaq(el) {
-
       const parent = el.parentElement;
-
       parent.classList.toggle("active");
-
     }
 
 
     /* =========================
-       SHOPPING CART
+       SHOPPING CART + ANIMATION
     ========================== */
 
     let cartCount = 0;
     let cartList = [];
 
-
     function toggleCart() {
-
       document
         .getElementById("cartSidebar")
         .classList.toggle("open");
-
     }
 
+    function updateCartUI() {
+      const badge = document.getElementById("cartBadge");
+      badge.innerText = cartCount;
 
-    function addToCart(itemName) {
+      const cartItemsDiv = document.getElementById("cartItems");
+      const cartSummary = document.getElementById("cartSummary");
+      const cartTotalText = document.getElementById("cartTotalText");
 
+      if (cartList.length === 0) {
+        cartItemsDiv.innerHTML = '<p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">Your cart is empty.</p>';
+        if (cartSummary) cartSummary.style.display = "none";
+      } else {
+        cartItemsDiv.innerHTML = cartList
+          .map(
+            (item, index) => `
+              <div class="cart-item-row">
+                <div class="cart-item-info">
+                  <span class="cart-item-name">${index + 1}. ${item}</span>
+                  <span class="cart-item-price">₱35</span>
+                </div>
+                <button
+                  type="button"
+                  class="cart-remove-btn"
+                  onclick="removeFromCart(${index})"
+                  title="Remove ${item}"
+                  aria-label="Remove ${item}"
+                >
+                  &times;
+                </button>
+              </div>
+            `
+          )
+          .join("");
+
+        if (cartSummary) {
+          cartSummary.style.display = "block";
+          if (cartTotalText) {
+            cartTotalText.innerText = "₱" + (cartList.length * 35);
+          }
+        }
+      }
+    }
+
+    function addToCart(itemName, btn) {
       cartCount++;
-
       cartList.push(itemName);
 
-      document.getElementById("cartBadge").innerText = cartCount;
+      // Button click feedback animation
+      const targetBtn = btn || (window.event ? (window.event.currentTarget || (window.event.target ? window.event.target.closest('.add-to-cart-btn') : null)) : null);
+      if (targetBtn && !targetBtn.classList.contains("added")) {
+        const originalText = targetBtn.innerText;
+        targetBtn.innerText = "✓ Added!";
+        targetBtn.classList.add("added");
+        setTimeout(() => {
+          targetBtn.innerText = originalText;
+          targetBtn.classList.remove("added");
+        }, 900);
+      }
 
-      const cartItemsDiv =
-        document.getElementById("cartItems");
+      // Trigger pop/shake animation on badge
+      const badge = document.getElementById("cartBadge");
+      badge.classList.remove("cart-pop");
+      void badge.offsetWidth; // Force DOM reflow to re-trigger keyframe
+      badge.classList.add("cart-pop");
 
-      cartItemsDiv.innerHTML = cartList
-        .map(
-          (item, index) => `
-            <div
-              style="
-                padding: 8px 0;
-                border-bottom: 1px solid #eee;
-                display:flex;
-                justify-content:space-between;
-                gap:10px;
-              "
-            >
-              <strong>${index + 1}. ${item}</strong>
-              <span>₱35</span>
-            </div>
-          `
-        )
-        .join("");
+      updateCartUI();
+    }
 
+    function removeFromCart(index) {
+      cartList.splice(index, 1);
+      cartCount = cartList.length;
+
+      // Trigger badge bounce on item removal
+      const badge = document.getElementById("cartBadge");
+      badge.classList.remove("cart-pop");
+      void badge.offsetWidth;
+      badge.classList.add("cart-pop");
+
+      updateCartUI();
     }
 
 
@@ -1793,7 +2896,6 @@
     ========================== */
 
     function searchMenu() {
-
       const searchValue =
         document
           .getElementById("searchInput")
@@ -1805,64 +2907,46 @@
         document.querySelectorAll(".menu-card");
 
       if (searchValue === "") {
-
         cards.forEach(card => {
           card.style.display = "";
         });
-
         return;
-
       }
 
       let found = false;
 
       cards.forEach(card => {
-
         const text =
           card.innerText.toLowerCase();
 
         if (text.includes(searchValue)) {
-
           card.style.display = "";
           found = true;
-
         } else {
-
           card.style.display = "none";
-
         }
-
       });
 
       if (found) {
-
         document
           .getElementById("menu")
           .scrollIntoView({
             behavior: "smooth"
           });
-
       } else {
-
         alert(
           "Sorry, we couldn't find that item on our menu."
         );
-
       }
-
     }
 
-
     /* Press Enter to Search */
-
     document
       .getElementById("searchInput")
       .addEventListener("keydown", function(event) {
-
         if (event.key === "Enter") {
           searchMenu();
         }
-
       });
 
 
@@ -1871,54 +2955,399 @@
     ========================== */
 
     function checkout() {
-
       if (cartList.length === 0) {
-
         alert("Your cart is empty.");
-
         return;
-
       }
 
-      const total =
-        cartList.length * 35;
+      const total = cartList.length * 35;
 
       alert(
         "Thank you for choosing Creamy Crown Egg! 🥚\n\n" +
-        "Items: " + cartList.length +
-        "\nTotal: ₱" + total +
+        "Your Order (" + cartList.length + " items):\n" +
+        cartList.map((item, i) => (i + 1) + ". " + item).join("\n") +
+        "\n\nTotal: ₱" + total +
         "\n\nYour order has been received."
       );
 
+      // Reset cart after checkout
+      cartList = [];
+      cartCount = 0;
+      updateCartUI();
+      toggleCart();
     }
 
 
     /* =========================
-       CLOSE MOBILE MENU WHEN
-       CLICKING OUTSIDE
+       CLOSE MOBILE MENU ON OUTSIDE CLICK
     ========================== */
 
     document.addEventListener("click", function(event) {
-
-      const menu =
-        document.getElementById("mobileMenu");
-
-      const button =
-        document.getElementById("menuToggle");
+      const menu = document.getElementById("mobileMenu");
+      const button = document.getElementById("menuToggle");
 
       if (
         menu.classList.contains("open") &&
         !menu.contains(event.target) &&
         !button.contains(event.target)
       ) {
-
         closeMobileMenu();
-
       }
-
     });
 
+
+    /* =========================
+       SCROLL REVEAL (INTERSECTION OBSERVER)
+    ========================== */
+
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          // Staggered reveal effect
+          setTimeout(() => {
+            entry.target.classList.add("reveal");
+          }, idx * 90);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll(".menu-card").forEach(card => {
+      cardObserver.observe(card);
+    });
+
+
+    /* =========================
+       REVIEWS CAROUSEL SLIDER
+    ========================== */
+
+    let currentReviewIndex = 0;
+
+    function getVisibleReviewCount() {
+      if (window.innerWidth <= 640) return 1;
+      if (window.innerWidth <= 990) return 2;
+      return 3;
+    }
+
+    function getMaxReviewIndex() {
+      const track = document.getElementById("reviewsTrack");
+      const total = track ? track.children.length : 12;
+      const visible = getVisibleReviewCount();
+      return Math.max(0, total - visible);
+    }
+
+    function slideReviews(direction) {
+      const maxIndex = getMaxReviewIndex();
+      currentReviewIndex += direction;
+
+      if (currentReviewIndex > maxIndex) {
+        currentReviewIndex = 0; // Wrap around to start (review 1, 2, 3)
+      } else if (currentReviewIndex < 0) {
+        currentReviewIndex = maxIndex; // Wrap around to end
+      }
+
+      updateReviewsSlider();
+    }
+
+    function goToReview(index) {
+      const maxIndex = getMaxReviewIndex();
+      currentReviewIndex = Math.max(0, Math.min(index, maxIndex));
+      updateReviewsSlider();
+    }
+
+    function updateReviewsSlider() {
+      const track = document.getElementById("reviewsTrack");
+      if (!track || !track.children.length) return;
+
+      const firstCard = track.children[0];
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const trackStyles = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyles.gap) || 22;
+
+      const offset = currentReviewIndex * (cardWidth + gap);
+      track.style.transform = `translateX(-${offset}px)`;
+
+      updateReviewDots();
+    }
+
+    function renderReviewDots() {
+      const dotsContainer = document.getElementById("reviewsDots");
+      if (!dotsContainer) return;
+      const maxIndex = getMaxReviewIndex();
+      dotsContainer.innerHTML = "";
+
+      for (let i = 0; i <= maxIndex; i++) {
+        const dot = document.createElement("button");
+        dot.className = "review-dot" + (i === currentReviewIndex ? " active" : "");
+        dot.setAttribute("aria-label", "Go to review " + (i + 1));
+        dot.onclick = () => goToReview(i);
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateReviewDots() {
+      const dots = document.querySelectorAll(".review-dot");
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === currentReviewIndex);
+      });
+    }
+
+    // Touch swipe support for mobile
+    (function initReviewSwipe() {
+      const viewport = document.getElementById("reviewsViewport");
+      if (!viewport) return;
+      let startX = 0;
+      let isSwiping = false;
+
+      viewport.addEventListener("touchstart", (e) => {
+        startX = e.touches[0].clientX;
+        isSwiping = true;
+      }, { passive: true });
+
+      viewport.addEventListener("touchend", (e) => {
+        if (!isSwiping) return;
+        const diffX = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diffX) > 40) {
+          slideReviews(diffX > 0 ? 1 : -1);
+        }
+        isSwiping = false;
+      }, { passive: true });
+    })();
+
+    window.addEventListener("resize", () => {
+      const maxIndex = getMaxReviewIndex();
+      if (currentReviewIndex > maxIndex) currentReviewIndex = maxIndex;
+      renderReviewDots();
+      updateReviewsSlider();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderReviewDots();
+      updateReviewsSlider();
+    });
+    setTimeout(() => {
+      renderReviewDots();
+      updateReviewsSlider();
+    }, 150);
+
+
+    /* =========================
+       CHATBOT FUNCTIONALITY
+    ========================== */
+
+    function toggleChatbot() {
+      const chatWin = document.getElementById("chatbotWindow");
+      const isOpen = chatWin.classList.toggle("open");
+      if (isOpen) {
+        setTimeout(() => {
+          document.getElementById("chatbotInput").focus();
+        }, 200);
+      }
+    }
+
+    function handleChipClick(text) {
+      document.getElementById("chatbotInput").value = text;
+      handleChatSubmit();
+    }
+
+    function appendChatMessage(htmlText, sender = "bot") {
+      const messagesContainer = document.getElementById("chatbotMessages");
+      const typingIndicator = document.getElementById("chatTyping");
+
+      const msgDiv = document.createElement("div");
+      msgDiv.className = "chat-msg " + sender;
+      msgDiv.innerHTML = htmlText;
+
+      messagesContainer.insertBefore(msgDiv, typingIndicator);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function showTyping(show) {
+      const typing = document.getElementById("chatTyping");
+      const messagesContainer = document.getElementById("chatbotMessages");
+      typing.style.display = show ? "flex" : "none";
+      if (show) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    }
+
+    function generateBotReply(userText) {
+      const query = userText.toLowerCase().trim();
+
+      // Check for flavors / menu
+      if (query.includes("flavor") || query.includes("menu") || query.includes("what do you have") || query.includes("types") || query.includes("dishes")) {
+        return `We have 5 Royal Signature Flavors (₱35/cup):<br>
+        • 🍳 <b>Classic:</b> Seasoned yolk whip with fresh herbs.<br>
+        • 🥓 <b>Cheesy Bacon:</b> Shredded cheddar & crispy bacon.<br>
+        • 🥬 <b>Spinach Cheese:</b> Creamed spinach & melted cheese.<br>
+        • 🧄 <b>Garlic Parmesan:</b> Aromatic garlic & savory parmesan.<br>
+        • 🌶️ <b>Spicy Barbeque:</b> Sweet-smoky BBQ with chili flakes.<br><br>
+        <i>Tip: Type "Order [Flavor]" to add one directly to your cart!</i>`;
+      }
+
+      // Check for ordering / adding items
+      const flavorMap = {
+        "classic": "Classic",
+        "cheesy bacon": "Cheesy Bacon",
+        "bacon": "Cheesy Bacon",
+        "spinach": "Spinach Cheese",
+        "spinach cheese": "Spinach Cheese",
+        "garlic": "Garlic Parmesan",
+        "garlic parmesan": "Garlic Parmesan",
+        "parmesan": "Garlic Parmesan",
+        "spicy": "Spicy Barbeque",
+        "bbq": "Spicy Barbeque",
+        "barbeque": "Spicy Barbeque"
+      };
+
+      if (query.includes("order") || query.includes("buy") || query.includes("add") || query.includes("get")) {
+        for (const key in flavorMap) {
+          if (query.includes(key)) {
+            const flavor = flavorMap[key];
+            addToCart(flavor);
+            return `👑 Great choice! Added <b>${flavor}</b> to your cart (₱35).<br>You now have <b>${cartList.length} item(s)</b>.<br><button type="button" onclick="toggleCart()" class="chat-inline-btn">View Cart 🛒</button>`;
+          }
+        }
+      }
+
+      // Check for prices
+      if (query.includes("price") || query.includes("cost") || query.includes("how much") || query.includes("magkano") || query.includes("rate")) {
+        return `💰 <b>Our Pricing:</b><br>
+        • <b>Single Cup:</b> ₱35 each<br>
+        • <b>Crown Trio Box (3 pcs):</b> ₱100 (Save ₱5)<br>
+        • <b>Party Platter (5 pcs):</b> ₱170 (Save ₱5)<br><br>
+        Gourmet quality made affordable for everyday cravings!`;
+      }
+
+      // Check for location
+      if (query.includes("location") || query.includes("where") || query.includes("pasig") || query.includes("address") || query.includes("store") || query.includes("branch")) {
+        return `📍 You can find us at:<br><b>F Legaspi St. Ugong, Pasig City.</b><br><br>Visit us to grab yours hot & crunchy off the fryer!`;
+      }
+
+      // Check for contact / phone
+      if (query.includes("contact") || query.includes("phone") || query.includes("number") || query.includes("call") || query.includes("cell")) {
+        return `📞 <b>Get in Touch:</b><br>Phone: <b>09603794271</b><br>Location: F Legaspi St. Ugong, Pasig City.<br>Feel free to call or text for pre-orders!`;
+      }
+
+      // Check for party / bulk
+      if (query.includes("party") || query.includes("bulk") || query.includes("catering") || query.includes("event") || query.includes("platter")) {
+        return `🎉 <b>Party Platters & Bulk Orders:</b><br>We do party platters (5 pcs for ₱170) and bulk boxes for gatherings and events!<br>Please call us at <b>09603794271</b> in advance to book.`;
+      }
+
+      // Check cart status
+      if (query.includes("cart") || query.includes("checkout") || query.includes("total") || query.includes("items")) {
+        if (cartList.length === 0) {
+          return `Your cart is currently empty! Tap <b>👑 Flavors</b> to pick a delicious treat!`;
+        } else {
+          return `🛒 You have <b>${cartList.length} item(s)</b> totaling <b>₱${cartList.length * 35}</b>:<br>` +
+            cartList.map(item => "• " + item).join("<br>") +
+            `<br><button type="button" onclick="toggleCart()" class="chat-inline-btn">Open Cart 🛒</button>`;
+        }
+      }
+
+      // What is it / about
+      if (query.includes("what is") || query.includes("about") || query.includes("deviled") || query.includes("egg")) {
+        return `🥚 <b>Creamy Crown Egg</b> is Pasig's favorite gourmet snack! We take hard-boiled eggs, give them an airy panko crunch shell, and fill them with silky whipped yolk and artisan toppings.`;
+      }
+
+      // Greetings
+      if (query.includes("hi") || query.includes("hello") || query.includes("hey") || query.includes("good morning") || query.includes("good evening") || query.includes("kamusta")) {
+        return `Hello! 👑 Welcome to Creamy Crown Egg. How can I help you today? You can ask about our <b>flavors</b>, <b>prices</b>, <b>location</b>, or say <i>'Order Cheesy Bacon'</i>!`;
+      }
+
+      // Default fallback
+      return `I can help you with anything about Creamy Crown Egg! 🥚 Try asking about our <b>flavors</b>, <b>prices</b>, <b>location</b>, or tap one of the quick options below:
+      <div class="chat-chips">
+        <button type="button" class="chat-chip" onclick="handleChipClick('Flavors')">👑 Flavors</button>
+        <button type="button" class="chat-chip" onclick="handleChipClick('Prices')">💰 Prices</button>
+        <button type="button" class="chat-chip" onclick="handleChipClick('Location')">📍 Location</button>
+        <button type="button" class="chat-chip" onclick="handleChipClick('Party Pre-orders')">🎉 Bulk Orders</button>
+      </div>`;
+    }
+
+    function handleChatSubmit(event) {
+      if (event) event.preventDefault();
+      const input = document.getElementById("chatbotInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendChatMessage(text, "user");
+      input.value = "";
+
+      showTyping(true);
+      setTimeout(() => {
+        showTyping(false);
+        const reply = generateBotReply(text);
+        appendChatMessage(reply, "bot");
+      }, 450);
+    }
+
   </script>
+
+  <!-- =========================
+       CHATBOT WIDGET
+  ========================== -->
+
+  <!-- Floating Toggle Button -->
+  <button
+    id="chatbotToggle"
+    class="chatbot-toggle"
+    onclick="toggleChatbot()"
+    aria-label="Open Chat with Creamy Crown Assistant"
+    title="Chat with us!"
+  >
+    👑
+    <span class="chat-badge-dot"></span>
+  </button>
+
+  <!-- Chat Window -->
+  <div id="chatbotWindow" class="chatbot-window" role="dialog" aria-label="Customer Support Chat">
+
+    <div class="chatbot-header">
+      <div class="chatbot-header-info">
+        <div class="chatbot-avatar">👑</div>
+        <div>
+          <div class="chatbot-title">Crown Assistant</div>
+          <div class="chatbot-status">Online</div>
+        </div>
+      </div>
+      <button class="chatbot-close" onclick="toggleChatbot()" aria-label="Close Chat">&times;</button>
+    </div>
+
+    <div id="chatbotMessages" class="chatbot-messages">
+      <div class="chat-msg bot">
+        Hello! 👋 Welcome to <strong>Creamy Crown Egg</strong>! How can I help you today?
+        <div class="chat-chips">
+          <button type="button" class="chat-chip" onclick="handleChipClick('Flavors')">👑 Flavors</button>
+          <button type="button" class="chat-chip" onclick="handleChipClick('Prices')">💰 Prices</button>
+          <button type="button" class="chat-chip" onclick="handleChipClick('Location')">📍 Location</button>
+          <button type="button" class="chat-chip" onclick="handleChipClick('Order Cheesy Bacon')">🥓 Order Cheesy Bacon</button>
+          <button type="button" class="chat-chip" onclick="handleChipClick('My Cart')">🛒 My Cart</button>
+        </div>
+      </div>
+
+      <div id="chatTyping" class="chat-typing">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <form class="chatbot-input-area" onsubmit="handleChatSubmit(event)">
+      <input
+        type="text"
+        id="chatbotInput"
+        class="chatbot-input"
+        placeholder="Ask a question or order..."
+        autocomplete="off"
+      />
+      <button type="submit" class="chatbot-send" aria-label="Send Message">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+
+  </div>
 
 </body>
 </html>
