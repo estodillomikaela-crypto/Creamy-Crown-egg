@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Leaflet Map (Free OpenStreetMap tracking) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
     :root {
       --bg-cream: #fffdf5;
@@ -213,9 +217,16 @@
       display: flex;
       align-items: center;
       background: var(--white);
-      border: 1px solid #e2d2c1;
+      border: 1.5px solid #ebd9c8;
       border-radius: var(--radius-full);
-      padding: 4px 6px 4px 14px;
+      padding: 4px 6px 4px 12px;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .search-bar:focus-within {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.22);
     }
 
     .search-input {
@@ -224,7 +235,32 @@
       background: transparent;
       font-size: 0.88rem;
       color: var(--text-dark);
-      width: 140px;
+      width: 130px;
+      font-family: inherit;
+      transition: width 0.25s ease;
+    }
+
+    .search-input:focus {
+      width: 155px;
+    }
+
+    .search-clear-btn {
+      background: transparent;
+      border: none;
+      color: #a8a29e;
+      font-size: 1.25rem;
+      line-height: 1;
+      padding: 0 5px;
+      margin-right: 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s ease;
+    }
+
+    .search-clear-btn:hover {
+      color: #ef4444;
     }
 
     .search-btn {
@@ -240,11 +276,13 @@
       cursor: pointer;
       transition: var(--transition);
       font-weight: 800;
+      flex-shrink: 0;
     }
 
     .search-btn:hover {
       background: var(--primary-terra-hover);
       color: #1a150e;
+      transform: scale(1.05);
     }
 
     .cart-btn {
@@ -314,6 +352,7 @@
       padding: 2rem 1.5rem;
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
     }
 
     .cart-sidebar.open {
@@ -411,6 +450,735 @@
       color: #1a150e;
       border-color: var(--primary-terra);
       transform: scale(1.12);
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .cart-qty-control {
+      display: flex;
+      align-items: center;
+      background: #fffbeb;
+      border: 1px solid #fde047;
+      border-radius: 9999px;
+      padding: 1px 3px;
+      gap: 2px;
+    }
+
+    .cart-qty-btn {
+      background: none;
+      border: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #92400e;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      transition: all 0.15s ease;
+    }
+
+    .cart-qty-btn:hover {
+      background: #fef08a;
+      color: #713f12;
+      transform: scale(1.15);
+    }
+
+    .cart-qty-num {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #713f12;
+      min-width: 14px;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* =========================
+       CHECKOUT DETAILS (AFTER CHECKOUT BUTTON)
+    ========================== */
+
+    .checkout-info-section {
+      margin-top: 1rem;
+      padding-top: 1.1rem;
+      border-top: 1.5px dashed #f0d5be;
+      animation: fadeInCheckout 0.3s ease-out;
+    }
+
+    @keyframes fadeInCheckout {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .checkout-info-header {
+      margin-bottom: 0.85rem;
+    }
+
+    .checkout-info-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.15rem;
+    }
+
+    .checkout-info-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .checkout-form-group {
+      margin-bottom: 0.75rem;
+    }
+
+    .checkout-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .checkout-required {
+      color: #dc2626;
+      font-weight: 800;
+    }
+
+    .checkout-input,
+    .checkout-textarea,
+    .checkout-select {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      background: #fffdf8;
+      border: 1.5px solid #ebd9c8;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .checkout-input:focus,
+    .checkout-textarea:focus,
+    .checkout-select:focus {
+      border-color: #facc15;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.25);
+    }
+
+    .checkout-textarea {
+      resize: vertical;
+      min-height: 54px;
+    }
+
+    .checkout-hint {
+      font-size: 0.73rem;
+      color: #78716c;
+      margin-top: 3px;
+      display: block;
+      font-weight: 500;
+    }
+
+    /* =========================
+       MAP & FREE DELIVERY TRACKER
+    ========================== */
+
+    .checkout-map-wrap {
+      margin-top: 0.65rem;
+      border: 1.5px solid #ebd9c8;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fffdf8;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .checkout-map-badge-bar {
+      background: #fef3c7;
+      padding: 0.35rem 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #fde68a;
+    }
+
+    .map-badge-tag {
+      background: #16a34a;
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .map-hint-text {
+      font-size: 0.70rem;
+      color: #78716c;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .checkout-picker-map {
+      width: 100%;
+      height: 165px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .checkout-map-caption {
+      padding: 0.35rem 0.6rem;
+      font-size: 0.73rem;
+      color: #57534e;
+      display: flex;
+      justify-content: space-between;
+      background: #fffbeb;
+      border-top: 1px solid #fed7aa;
+    }
+
+    .map-locate-btn {
+      background: #fef3c7;
+      border: 1px solid #facc15;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #713f12;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .map-locate-btn:hover {
+      background: #fde047;
+      color: #000;
+    }
+
+    /* Live Tracking in Receipt Modal */
+    .delivery-tracking-section {
+      background: #fffdf5;
+      border: 1.5px solid #fed7aa;
+      border-radius: 16px;
+      padding: 1rem 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .tracking-free-pill {
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid #86efac;
+    }
+
+    .receipt-tracking-map {
+      width: 100%;
+      height: 195px;
+      border-radius: 12px;
+      margin: 0.65rem 0 0.5rem;
+      border: 1.5px solid #fed7aa;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tracking-status-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0.6rem 0 0.3rem;
+      padding: 0 4px;
+    }
+
+    .track-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .track-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e7e5e4;
+      border: 2px solid #a8a29e;
+      transition: all 0.3s;
+    }
+
+    .track-step.done .track-dot {
+      background: #16a34a;
+      border-color: #16a34a;
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+    }
+
+    .track-step.active .track-dot {
+      background: #f59e0b;
+      border-color: #d97706;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.3);
+      animation: pulseDot 1.5s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+    }
+
+    .track-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #78716c;
+    }
+
+    .track-step.done .track-label,
+    .track-step.active .track-label {
+      color: #1c1917;
+      font-weight: 800;
+    }
+
+    .track-line {
+      flex: 1;
+      height: 2px;
+      background: #e7e5e4;
+      margin: 0 4px 14px;
+    }
+
+    .track-line.done {
+      background: #16a34a;
+    }
+
+    .tracking-origin-info {
+      background: #ffffff;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+    }
+
+    .origin-badge {
+      background: #ffedd5;
+      color: #c2410c;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+
+    .origin-name {
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .origin-sub {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      margin-top: 2px;
+    }
+
+    /* Keep Leaflet popups and controls contained cleanly */
+    .checkout-picker-map .leaflet-pane,
+    .receipt-tracking-map .leaflet-pane {
+      z-index: 2 !important;
+    }
+    .checkout-picker-map .leaflet-top,
+    .checkout-picker-map .leaflet-bottom,
+    .receipt-tracking-map .leaflet-top,
+    .receipt-tracking-map .leaflet-bottom {
+      z-index: 3 !important;
+    }
+
+    .custom-map-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+      line-height: 1;
+    }
+
+    .checkout-submit-btn {
+      width: 100%;
+      text-align: center;
+      margin-top: 0.4rem;
+      padding: 0.75rem 1.2rem;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* =========================
+       SEARCH RESULTS DROPDOWN (UPPER RIGHT)
+    ========================== */
+
+    .search-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 310px;
+      max-width: calc(100vw - 32px);
+      background: #ffffff;
+      border: 1.5px solid #ebd9c8;
+      border-radius: 16px;
+      box-shadow: 0 14px 35px rgba(70, 45, 25, 0.16);
+      padding: 8px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 380px;
+      overflow-y: auto;
+      animation: fadeInDropdown 0.2s ease-out;
+    }
+
+    @keyframes fadeInDropdown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .search-dropdown-header {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #78716c;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 6px 8px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f3e8dc;
+      margin-bottom: 4px;
+    }
+
+    .search-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 8px;
+      border-radius: 10px;
+      transition: background 0.18s ease;
+      cursor: pointer;
+    }
+
+    .search-dropdown-item:hover {
+      background: #fff8eb;
+    }
+
+    .search-dropdown-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #fffdf8;
+      border: 1px solid #f3e8dc;
+      flex-shrink: 0;
+    }
+
+    .search-dropdown-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .search-dropdown-name {
+      font-weight: 700;
+      font-size: 0.86rem;
+      color: #1c1917;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-dropdown-desc {
+      font-size: 0.70rem;
+      color: #78716c;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .search-dropdown-price {
+      font-size: 0.80rem;
+      font-weight: 800;
+      color: #b45309;
+    }
+
+    .search-dropdown-add-btn {
+      background: #f59e0b;
+      color: #1a150e;
+      border: none;
+      border-radius: 9999px;
+      padding: 5px 11px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .search-dropdown-add-btn:hover {
+      background: #d97706;
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .search-dropdown-empty {
+      padding: 18px 12px;
+      text-align: center;
+      color: #78716c;
+      font-size: 0.84rem;
+    }
+
+    /* =========================
+       ORDER CONFIRMATION MODAL & RECEIPT
+    ========================== */
+
+    .order-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 25, 23, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      animation: modalFadeIn 0.25s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .order-modal-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 460px;
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: 24px;
+      padding: 2rem 1.75rem 1.75rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      position: relative;
+      border: 2px solid #fef08a;
+      animation: modalPopIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: center;
+    }
+
+    @keyframes modalPopIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .order-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: #f5f5f4;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      line-height: 1;
+      color: #78716c;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .order-modal-close:hover {
+      background: #e7e5e4;
+      color: #1c1917;
+      transform: rotate(90deg);
+    }
+
+    .order-success-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1rem;
+      background: #fef9c3;
+      border: 2px solid #fde047;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 8px 16px rgba(250, 204, 21, 0.3);
+    }
+
+    .order-modal-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .order-modal-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+      line-height: 1.45;
+    }
+
+    .order-receipt {
+      background: #fffdf5;
+      border: 1.5px solid #fed7aa;
+      border-radius: 16px;
+      padding: 1.25rem 1.15rem;
+      text-align: left;
+      margin-bottom: 1.3rem;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .order-receipt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px dashed #fdba74;
+      margin-bottom: 0.9rem;
+    }
+
+    .order-badge {
+      background: #ffedd5;
+      color: #c2410c;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .order-id-text {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #9a3412;
+      font-family: monospace;
+    }
+
+    .receipt-section {
+      margin-bottom: 0.85rem;
+    }
+
+    .receipt-section-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #9a3412;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.45rem;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.35;
+    }
+
+    .receipt-label {
+      color: var(--text-muted);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .receipt-value {
+      color: var(--text-dark);
+      font-weight: 700;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .receipt-items-list {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #fed7aa;
+      margin: 0.4rem 0 0.6rem;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+
+    .receipt-item-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      padding: 0.25rem 0;
+      border-bottom: 1px dotted #ffedd5;
+    }
+
+    .receipt-item-row:last-child {
+      border-bottom: none;
+    }
+
+    .receipt-item-name {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .receipt-item-price {
+      font-weight: 700;
+      color: #b45309;
+    }
+
+    .receipt-divider {
+      height: 1px;
+      background: #fed7aa;
+      margin: 0.5rem 0;
+    }
+
+    .receipt-total-row {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      padding-top: 0.25rem;
+    }
+
+    .receipt-total-val {
+      color: #b45309;
+      font-size: 1.15rem;
+    }
+
+    .order-modal-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     /* =========================
@@ -1507,15 +2275,36 @@
 
     @media (max-width: 480px) {
       .header-actions {
-        gap: 6px;
+        gap: 5px;
       }
 
       .search-bar {
-        display: none;
+        display: flex;
+        padding: 2px 4px 2px 8px;
+        max-width: 125px;
+      }
+
+      .search-input {
+        width: 60px;
+        font-size: 0.74rem;
+      }
+
+      .search-input:focus {
+        width: 85px;
+      }
+
+      .search-btn {
+        width: 26px;
+        height: 26px;
+      }
+
+      .search-btn svg {
+        width: 12px;
+        height: 12px;
       }
 
       .brand-text h1 {
-        font-size: 0.82rem;
+        font-size: 0.80rem;
       }
 
       .mobile-menu {
@@ -1890,17 +2679,28 @@
       </button>
 
       <!-- SEARCH -->
-      <div class="search-bar">
+      <div class="search-bar" id="navSearchBar">
         <input
           type="text"
           id="searchInput"
           class="search-input"
           placeholder="Search menu..."
+          autocomplete="off"
+          oninput="handleSearchDropdown(this.value)"
+          onfocus="handleSearchDropdown(this.value)"
         />
-
         <button
+          type="button"
+          id="searchClearBtn"
+          class="search-clear-btn"
+          onclick="clearSearchDropdown()"
+          aria-label="Clear search"
+          style="display: none;"
+        >&times;</button>
+        <button
+          type="button"
           class="search-btn"
-          onclick="searchMenu()"
+          onclick="handleSearchDropdown(document.getElementById('searchInput').value)"
           aria-label="Search"
         >
           <svg
@@ -1917,6 +2717,9 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
+
+        <!-- Dropdown search results directly below search menu -->
+        <div id="searchDropdownResults" class="search-dropdown-menu" style="display: none;"></div>
       </div>
 
       <!-- CART -->
@@ -1994,12 +2797,147 @@
     </div>
 
     <button
+      id="checkoutBtn"
       class="btn-terra"
-      style="width: 100%; text-align: center; margin-top: 0.8rem;"
+      style="width: 100%; text-align: center; margin-top: 0.8rem; display: none;"
       onclick="checkout()"
     >
       Checkout
     </button>
+
+    <!-- =========================
+         CUSTOMER INFORMATION SECTION
+         (Appears after checkout button)
+    ========================== -->
+    <div id="checkoutInfoSection" class="checkout-info-section" style="display: none;">
+      <div class="checkout-info-header">
+        <h4 class="checkout-info-title">Delivery Details 🛵</h4>
+        <p class="checkout-info-subtitle">Fill in your information to receive your order</p>
+      </div>
+
+      <form id="checkoutForm" action="javascript:void(0);" onsubmit="handlePlaceOrder(event); return false;">
+        <div class="checkout-form-group">
+          <label for="checkoutName" class="checkout-label">
+            Name: <span class="checkout-required">*</span>
+          </label>
+          <input
+            type="text"
+            id="checkoutName"
+            class="checkout-input"
+            placeholder="Enter your full name"
+            required
+            autocomplete="name"
+            onkeydown="if(event.key >= '0' && event.key <= '9') event.preventDefault(); if(event.key === 'Enter') { event.preventDefault(); handlePlaceOrder(event); }"
+            oninput="this.value = this.value.replace(/[0-9]/g, '')"
+          />
+          <small class="checkout-hint">Letters only (no numbers allowed)</small>
+        </div>
+
+        <div class="checkout-form-group">
+          <label for="checkoutContact" class="checkout-label">
+            Contact Number: <span class="checkout-required">*</span>
+          </label>
+          <input
+            type="tel"
+            id="checkoutContact"
+            class="checkout-input"
+            value="09"
+            placeholder="09XXXXXXXXX"
+            maxlength="11"
+            pattern="^09[0-9]{9}$"
+            title="Contact number must start with 09 and have exactly 11 digits"
+            required
+            autocomplete="tel"
+            onfocus="handleContactFocus(this)"
+            onkeydown="handleContactKeyDown(event, this); if(event.key === 'Enter') { event.preventDefault(); handlePlaceOrder(event); }"
+            oninput="handleContactInput(this)"
+          />
+          <small class="checkout-hint">Must start with 09 and have exactly 11 digits</small>
+        </div>
+
+        <div class="checkout-form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+            <label for="checkoutAddress" class="checkout-label" style="margin-bottom: 0;">
+              Address: <span class="checkout-required">*</span>
+            </label>
+            <button
+              type="button"
+              class="map-locate-btn"
+              onclick="locateUserPosition()"
+              title="Pin my current GPS location"
+            >
+              🎯 My Location
+            </button>
+          </div>
+          <textarea
+            id="checkoutAddress"
+            class="checkout-textarea"
+            rows="2"
+            placeholder="House/Unit #, Street, Barangay, City"
+            required
+            autocomplete="street-address"
+          ></textarea>
+
+            <!-- Interactive Leaflet Map -->
+            <div class="checkout-map-wrap">
+              <div class="checkout-map-badge-bar">
+                <span id="checkoutMapBadge" class="map-badge-tag">🛵 FREE (≤1km)</span>
+                <span class="map-hint-text">Origin: 14.5728° N, 121.0794° E</span>
+              </div>
+              <div id="checkoutPickerMap" class="checkout-picker-map"></div>
+              <div class="checkout-map-caption">
+                <span>📍 Tap/drag map to set pin</span>
+                <span id="deliveryDistanceText" style="font-weight: 700; color: #b45309;">~0.8 km (FREE)</span>
+              </div>
+            </div>
+            <div style="font-size: 0.72rem; color: #78716c; margin-top: 0.35rem; line-height: 1.35;">
+              <span style="font-weight: 700; color: #b45309;">💡 Rates:</span> Free within 1km • ₱25 up to 2km • ₱50 up to 3km • +₱25 per additional km
+            </div>
+          </div>
+
+          <div class="checkout-form-group">
+            <label class="checkout-label">
+              Payment Method:
+            </label>
+            <div style="background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 10px; padding: 0.65rem 0.85rem; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-weight: 700; color: #92400e; font-size: 0.88rem; display: flex; align-items: center; gap: 6px;">
+                💵 Cash on Delivery (COD)
+              </span>
+              <span style="background: #16a34a; color: #fff; font-size: 0.68rem; font-weight: 800; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;">COD Only</span>
+            </div>
+            <input type="hidden" id="checkoutPayment" value="Cash on Delivery (COD)">
+            <div style="font-size: 0.72rem; color: #78716c; margin-top: 0.35rem; line-height: 1.35;">
+              <span style="font-weight: 700; color: #b45309;">ℹ️ Note:</span> Cash on Delivery is currently our only mode of payment. Please prepare exact payment upon delivery.
+            </div>
+          </div>
+
+          <!-- Checkout Price Breakdown Summary -->
+          <div id="checkoutBreakdownCard" style="background: #fffdf8; border: 1.5px solid #ebd9c8; border-radius: 12px; padding: 0.75rem 0.85rem; margin: 0.75rem 0 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #78716c; margin-bottom: 0.3rem;">
+              <span>Items Subtotal:</span>
+              <span id="checkoutSubtotalText" style="font-weight: 600; color: #1c1917;">₱0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #78716c; margin-bottom: 0.3rem;">
+              <span>Delivery Fee (<span id="checkoutDistanceText">0.0 km</span>):</span>
+              <span id="checkoutDeliveryFeeText" style="font-weight: 700; color: #16a34a;">FREE (₱0)</span>
+            </div>
+            <div style="height: 1px; background: #ebd9c8; margin: 0.35rem 0 0.45rem;"></div>
+            <div style="display: flex; justify-content: space-between; font-size: 1.05rem; font-weight: 800; color: #1c1917;">
+              <span>Total to Pay:</span>
+              <span id="checkoutGrandTotalText" style="color: #b45309;">₱0</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="placeOrderBtn"
+            class="btn-terra checkout-submit-btn"
+            onclick="handlePlaceOrder(event)"
+          >
+            Place Order 🛍️
+          </button>
+        </form>
+    </div>
 
   </div>
 
@@ -2070,7 +3008,7 @@
     <div class="menu-grid">
 
       <!-- CLASSIC -->
-      <article class="menu-card">
+      <article class="menu-card" data-name="Classic" data-category="herbs best-seller classic" data-keywords="classic original herb herbs egg yolk simple velvety whip">
         <div class="menu-card-img-wrap">
           <img
             src="https://i.postimg.cc/yJNJsQZM/825309678-1403590994548999-2002702237790290058-n.jpg"
@@ -2092,7 +3030,7 @@
 
 
       <!-- CHEESY BACON -->
-      <article class="menu-card">
+      <article class="menu-card" data-name="Cheesy Bacon" data-category="cheesy best-seller savory bacon" data-keywords="cheesy bacon cheddar cheese crispy savory meat whip loaded">
         <div class="menu-card-img-wrap">
           <img
             src="https://i.postimg.cc/4N0vXzF8/825260912-28068494169518627-3522917729317923020-n.jpg"
@@ -2114,7 +3052,7 @@
 
 
       <!-- SPINACH CHEESE -->
-      <article class="menu-card">
+      <article class="menu-card" data-name="Spinach Cheese" data-category="cheesy veggie spinach" data-keywords="spinach cheese creamed rich melted vegetable veggie golden egg cup">
         <div class="menu-card-img-wrap">
           <img
             src="https://i.postimg.cc/xJwqG94f/825260912-28068494169518627-3522917729317923020-n.jpg"
@@ -2136,7 +3074,7 @@
 
 
       <!-- GARLIC PARMESAN -->
-      <article class="menu-card">
+      <article class="menu-card" data-name="Garlic Parmesan" data-category="cheesy savory garlic" data-keywords="garlic parmesan cheese aromatic savory toasted whip dust rich">
         <div class="menu-card-img-wrap">
           <img
             src="https://i.postimg.cc/zLS128vr/825310427-1802599617408300-663511174159607183-n.jpg"
@@ -2158,7 +3096,7 @@
 
 
       <!-- SPICY BARBEQUE -->
-      <article class="menu-card">
+      <article class="menu-card" data-name="Spicy Barbeque" data-category="spicy savory bbq" data-keywords="spicy barbeque bbq sauce chili flakes sweet smoky kick hot">
         <div class="menu-card-img-wrap">
           <img
             src="https://i.postimg.cc/jW9jKsKj/825260989-1620178802805415-1235550763634545801-n.jpg"
@@ -2198,12 +3136,11 @@
     </h2>
 
     <p class="about-body">
-      At <strong>Creamy Crown Egg</strong>, street food is elevated
-      to a royal snack experience. We carefully prepare hard-boiled
-      eggs with a double panko coating, flash-fry them to golden
-      crispness, and pipe them with our secret whipped, velvety
-      seasoned yolk cream. From garlic parmesan indulgence to spicy
-      barbecue glaze, every bite is crafted to satisfy your cravings.
+      At <strong>Creamy Crown Egg</strong>, started with a simple idea to make the usual deviled egg more exciting. 
+      We wanted to create something that people would enjoy not only because of its taste, but also because of its crispy texture and unique presentation. 
+      We made a creamy and flavorful filling and paired it with a crispy, fried, and breaded coating. After trying out different ideas and working together as a team, 
+      we came up with a snack that is crunchy on the outside and creamy on the inside. Creamy Crown Egg is our way of turning a simple and familiar ingredient into something fun, delicious, and different. 
+      We wanted it to feel a little fancy while still being affordable, convenient, and enjoyable for everyone.
     </p>
 
     <div class="mission-vision">
@@ -2296,12 +3233,8 @@
       </div>
       <div class="faq-answer">
         <div class="faq-answer-inner">
-          Our individual signature flavors are just
+          All our signature flavors are just
           <strong>₱35 per cup</strong>.
-          We also offer the
-          <strong>Crown Trio Box (3 pcs) for ₱100</strong>
-          and
-          <strong>Party Platters (5 pcs) for ₱170</strong>.
         </div>
       </div>
     </div>
@@ -2313,7 +3246,7 @@
       </div>
       <div class="faq-answer">
         <div class="faq-answer-inner">
-          Yes! We welcome party boxes and bulk orders.
+          Yes! We welcome bulk orders and event pre-orders at just <strong>₱35 per cup</strong>.
           Simply call us at <strong>09603794271</strong>
           or message us through our social media channels.
         </div>
@@ -2331,6 +3264,18 @@
           <strong>F Legaspi St. Ugong, Pasig City.</strong>
           For orders, availability, and inquiries, please contact us at
           <strong>09603794271</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span>What modes of payment do you accept?</span>
+        <span class="toggle-icon">+</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-inner">
+          We accept <strong>Cash on Delivery (COD) only</strong>. Please prepare exact payment upon receiving your fresh order from our rider.
         </div>
       </div>
     </div>
@@ -2801,7 +3746,7 @@
     ========================== */
 
     let cartCount = 0;
-    let cartList = [];
+    let cartList = []; // Array of { name: string, quantity: number, price: number }
 
     function toggleCart() {
       document
@@ -2810,51 +3755,94 @@
     }
 
     function updateCartUI() {
+      cartCount = cartList.reduce((sum, item) => sum + item.quantity, 0);
+
       const badge = document.getElementById("cartBadge");
-      badge.innerText = cartCount;
+      if (badge) badge.innerText = cartCount;
 
       const cartItemsDiv = document.getElementById("cartItems");
       const cartSummary = document.getElementById("cartSummary");
       const cartTotalText = document.getElementById("cartTotalText");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      const checkoutInfoSection = document.getElementById("checkoutInfoSection");
 
       if (cartList.length === 0) {
-        cartItemsDiv.innerHTML = '<p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">Your cart is empty.</p>';
+        if (cartItemsDiv) cartItemsDiv.innerHTML = '<p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">Your cart is empty.</p>';
         if (cartSummary) cartSummary.style.display = "none";
+        if (checkoutBtn) checkoutBtn.style.display = "none";
+        if (checkoutInfoSection) checkoutInfoSection.style.display = "none";
       } else {
-        cartItemsDiv.innerHTML = cartList
-          .map(
-            (item, index) => `
-              <div class="cart-item-row">
-                <div class="cart-item-info">
-                  <span class="cart-item-name">${index + 1}. ${item}</span>
-                  <span class="cart-item-price">₱35</span>
-                </div>
-                <button
-                  type="button"
-                  class="cart-remove-btn"
-                  onclick="removeFromCart(${index})"
-                  title="Remove ${item}"
-                  aria-label="Remove ${item}"
-                >
-                  &times;
-                </button>
-              </div>
-            `
-          )
-          .join("");
+        if (checkoutBtn) checkoutBtn.style.display = "block";
+        const grandTotal = cartList.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+
+        if (cartItemsDiv) {
+          cartItemsDiv.innerHTML = cartList
+            .map(
+              (item, index) => {
+                const displayName = item.quantity > 1 ? `${item.name} ${item.quantity}x` : item.name;
+                const itemTotal = item.quantity * item.price;
+                return `
+                  <div class="cart-item-row">
+                    <div class="cart-item-info">
+                      <span class="cart-item-name">${displayName}</span>
+                      <span class="cart-item-price">₱${itemTotal}</span>
+                    </div>
+                    <div class="cart-item-actions">
+                      <div class="cart-qty-control">
+                        <button
+                          type="button"
+                          class="cart-qty-btn"
+                          onclick="changeQuantity(${index}, -1)"
+                          title="Decrease quantity"
+                          aria-label="Decrease quantity of ${item.name}"
+                        >−</button>
+                        <span class="cart-qty-num">${item.quantity}</span>
+                        <button
+                          type="button"
+                          class="cart-qty-btn"
+                          onclick="changeQuantity(${index}, 1)"
+                          title="Increase quantity"
+                          aria-label="Increase quantity of ${item.name}"
+                        >+</button>
+                      </div>
+                      <button
+                        type="button"
+                        class="cart-remove-btn"
+                        onclick="removeFromCart(${index})"
+                        title="Remove ${item.name}"
+                        aria-label="Remove ${item.name}"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  </div>
+                `;
+              }
+            )
+            .join("");
+        }
 
         if (cartSummary) {
           cartSummary.style.display = "block";
           if (cartTotalText) {
-            cartTotalText.innerText = "₱" + (cartList.length * 35);
+            cartTotalText.innerText = "₱" + grandTotal;
           }
         }
+      }
+
+      if (typeof updateCheckoutBreakdown === "function") {
+        updateCheckoutBreakdown();
       }
     }
 
     function addToCart(itemName, btn) {
-      cartCount++;
-      cartList.push(itemName);
+      const existing = cartList.find(i => i.name === itemName);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cartList.push({ name: itemName, quantity: 1, price: 35 });
+      }
+      cartCount = cartList.reduce((sum, item) => sum + item.quantity, 0);
 
       // Button click feedback animation
       const targetBtn = btn || (window.event ? (window.event.currentTarget || (window.event.target ? window.event.target.closest('.add-to-cart-btn') : null)) : null);
@@ -2870,85 +3858,496 @@
 
       // Trigger pop/shake animation on badge
       const badge = document.getElementById("cartBadge");
-      badge.classList.remove("cart-pop");
-      void badge.offsetWidth; // Force DOM reflow to re-trigger keyframe
-      badge.classList.add("cart-pop");
+      if (badge) {
+        badge.classList.remove("cart-pop");
+        void badge.offsetWidth; // Force DOM reflow to re-trigger keyframe
+        badge.classList.add("cart-pop");
+      }
+
+      updateCartUI();
+    }
+
+    function changeQuantity(index, delta) {
+      if (!cartList[index]) return;
+      cartList[index].quantity += delta;
+      if (cartList[index].quantity <= 0) {
+        cartList.splice(index, 1);
+      }
+      cartCount = cartList.reduce((sum, item) => sum + item.quantity, 0);
+
+      const badge = document.getElementById("cartBadge");
+      if (badge) {
+        badge.classList.remove("cart-pop");
+        void badge.offsetWidth;
+        badge.classList.add("cart-pop");
+      }
 
       updateCartUI();
     }
 
     function removeFromCart(index) {
       cartList.splice(index, 1);
-      cartCount = cartList.length;
+      cartCount = cartList.reduce((sum, item) => sum + item.quantity, 0);
 
       // Trigger badge bounce on item removal
       const badge = document.getElementById("cartBadge");
-      badge.classList.remove("cart-pop");
-      void badge.offsetWidth;
-      badge.classList.add("cart-pop");
+      if (badge) {
+        badge.classList.remove("cart-pop");
+        void badge.offsetWidth;
+        badge.classList.add("cart-pop");
+      }
 
       updateCartUI();
     }
 
 
-    /* =========================
-       SEARCH
-    ========================== */
+    /* ========================================================
+       LIVE SEARCH DROPDOWN (UPPER RIGHT)
+    ======================================================== */
 
-    function searchMenu() {
-      const searchValue =
-        document
-          .getElementById("searchInput")
-          .value
-          .toLowerCase()
-          .trim();
+    const MENU_CATALOG = [
+      {
+        name: "Classic",
+        price: 35,
+        desc: "Velvety seasoned yolk whipped with fresh herbs",
+        img: "https://i.postimg.cc/yJNJsQZM/825309678-1403590994548999-2002702237790290058-n.jpg",
+        keywords: "classic original herb herbs egg yolk simple velvety whip"
+      },
+      {
+        name: "Cheesy Bacon",
+        price: 35,
+        desc: "Cheddar cheese and crispy savory bacon",
+        img: "https://i.postimg.cc/4N0vXzF8/825260912-28068494169518627-3522917729317923020-n.jpg",
+        keywords: "cheesy bacon cheddar cheese crispy savory meat whip loaded"
+      },
+      {
+        name: "Spinach Cheese",
+        price: 35,
+        desc: "Rich creamed spinach and melted cheese blend",
+        img: "https://i.postimg.cc/xJwqG94f/825260912-28068494169518627-3522917729317923020-n.jpg",
+        keywords: "spinach cheese creamed rich melted vegetable veggie golden"
+      },
+      {
+        name: "Garlic Parmesan",
+        price: 35,
+        desc: "Aromatic garlic and rich parmesan cheese",
+        img: "https://i.postimg.cc/zLS128vr/825310427-1802599617408300-663511174159607183-n.jpg",
+        keywords: "garlic parmesan cheese aromatic savory toasted whip dust"
+      },
+      {
+        name: "Spicy Barbeque",
+        price: 35,
+        desc: "Smoky BBQ sauce glaze with chili flakes",
+        img: "https://i.postimg.cc/jW9jKsKj/825260989-1620178802805415-1235550763634545801-n.jpg",
+        keywords: "spicy barbeque bbq sauce chili flakes sweet smoky kick hot"
+      }
+    ];
 
-      const cards =
-        document.querySelectorAll(".menu-card");
+    function handleSearchDropdown(rawVal) {
+      const dropdown = document.getElementById("searchDropdownResults");
+      const clearBtn = document.getElementById("searchClearBtn");
+      const query = (rawVal || "").trim().toLowerCase();
 
-      if (searchValue === "") {
-        cards.forEach(card => {
-          card.style.display = "";
-        });
+      if (clearBtn) {
+        clearBtn.style.display = query.length > 0 ? "flex" : "none";
+      }
+
+      if (!dropdown) return;
+
+      if (!query) {
+        dropdown.style.display = "none";
+        dropdown.innerHTML = "";
         return;
       }
 
-      let found = false;
-
-      cards.forEach(card => {
-        const text =
-          card.innerText.toLowerCase();
-
-        if (text.includes(searchValue)) {
-          card.style.display = "";
-          found = true;
-        } else {
-          card.style.display = "none";
-        }
+      // Filter matching flavors
+      const matches = MENU_CATALOG.filter(item => {
+        return item.name.toLowerCase().includes(query) ||
+               item.desc.toLowerCase().includes(query) ||
+               item.keywords.toLowerCase().includes(query);
       });
 
-      if (found) {
-        document
-          .getElementById("menu")
-          .scrollIntoView({
-            behavior: "smooth"
-          });
-      } else {
-        alert(
-          "Sorry, we couldn't find that item on our menu."
-        );
+      if (matches.length === 0) {
+        dropdown.innerHTML = `
+          <div class="search-dropdown-empty">
+            <div style="font-size: 1.6rem; margin-bottom: 4px;">🍳🔍</div>
+            <div>No flavors found matching "<b>${escapeHtml(rawVal.trim())}</b>"</div>
+            <div style="font-size: 0.72rem; color: #a8a29e; margin-top: 4px;">Try searching <i>cheese</i>, <i>bacon</i>, <i>spicy</i>, or <i>garlic</i></div>
+          </div>
+        `;
+        dropdown.style.display = "flex";
+        return;
+      }
+
+      let html = `
+        <div class="search-dropdown-header">
+          <span>${matches.length} Flavor${matches.length > 1 ? 's' : ''} Found</span>
+          <span style="color:#b45309;">₱35 each</span>
+        </div>
+      `;
+
+      matches.forEach(item => {
+        html += `
+          <div class="search-dropdown-item" onclick="quickSelectDropdownItem('${item.name}')">
+            <img src="${item.img}" alt="${item.name}" class="search-dropdown-thumb" />
+            <div class="search-dropdown-info">
+              <span class="search-dropdown-name">${item.name}</span>
+              <span class="search-dropdown-desc">${item.desc}</span>
+              <span class="search-dropdown-price">₱${item.price}</span>
+            </div>
+            <button type="button" class="search-dropdown-add-btn" onclick="event.stopPropagation(); quickAddFromDropdown('${item.name}', this)">
+              + Add
+            </button>
+          </div>
+        `;
+      });
+
+      dropdown.innerHTML = html;
+      dropdown.style.display = "flex";
+    }
+
+    function quickAddFromDropdown(flavorName, btn) {
+      addToCart(flavorName);
+      if (btn) {
+        const orig = btn.innerText;
+        btn.innerText = "✓ Added";
+        btn.style.background = "#16a34a";
+        btn.style.color = "#ffffff";
+        setTimeout(() => {
+          btn.innerText = orig;
+          btn.style.background = "";
+          btn.style.color = "";
+        }, 900);
       }
     }
 
-    /* Press Enter to Search */
-    document
-      .getElementById("searchInput")
-      .addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-          searchMenu();
+    function quickSelectDropdownItem(flavorName) {
+      closeSearchDropdown();
+      const menuEl = document.getElementById("menu");
+      if (menuEl) {
+        menuEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function clearSearchDropdown() {
+      const input = document.getElementById("searchInput");
+      if (input) {
+        input.value = "";
+        input.focus();
+      }
+      const clearBtn = document.getElementById("searchClearBtn");
+      if (clearBtn) clearBtn.style.display = "none";
+      const dropdown = document.getElementById("searchDropdownResults");
+      if (dropdown) {
+        dropdown.style.display = "none";
+        dropdown.innerHTML = "";
+      }
+    }
+
+    function closeSearchDropdown() {
+      const dropdown = document.getElementById("searchDropdownResults");
+      if (dropdown) dropdown.style.display = "none";
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function(e) {
+      const searchBar = document.getElementById("navSearchBar");
+      if (searchBar && !searchBar.contains(e.target)) {
+        closeSearchDropdown();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        closeSearchDropdown();
+      }
+    });
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+
+    /* ========================================================
+       FREE DELIVERY TRACKING & MAP ENGINE (LEAFLET + OPENSTREETMAP)
+       Starting Point: 14.5728° N, 121.0794° E (Ugong, Pasig City)
+    ======================================================== */
+
+    const STORE_COORDS = [14.5728, 121.0794];
+    let userDeliveryCoords = [14.5780, 121.0850]; // Default delivery location near Ugong, Pasig
+    let pickerMap = null;
+    let pickerMarker = null;
+    let pickerRouteLine = null;
+    let trackingMap = null;
+    let trackingRiderMarker = null;
+    let trackingAnimationInterval = null;
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Earth radius in km
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return (R * c).toFixed(1);
+    }
+
+    function getDeliveryFee(distanceKm) {
+      const dist = parseFloat(distanceKm);
+      if (isNaN(dist) || dist <= 1.0) {
+        return 0; // Free delivery within 1km
+      }
+      // Within 2km: ₱25
+      // Within 3km: ₱50
+      // Each additional km: +₱25
+      const extraKm = Math.ceil(dist - 1.0);
+      return extraKm * 25;
+    }
+
+    function updateCheckoutBreakdown() {
+      const subtotal = cartList.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+      const dist = parseFloat(calculateDistance(STORE_COORDS[0], STORE_COORDS[1], userDeliveryCoords[0], userDeliveryCoords[1]));
+      const fee = getDeliveryFee(dist);
+      const grandTotal = subtotal + fee;
+
+      const subtotalEl = document.getElementById("checkoutSubtotalText");
+      const distEl = document.getElementById("checkoutDistanceText");
+      const feeEl = document.getElementById("checkoutDeliveryFeeText");
+      const grandEl = document.getElementById("checkoutGrandTotalText");
+
+      if (subtotalEl) subtotalEl.innerText = "₱" + subtotal;
+      if (distEl) distEl.innerText = dist.toFixed(1) + " km";
+      if (feeEl) {
+        if (fee === 0) {
+          feeEl.innerHTML = '<span style="color:#16a34a; font-weight:700;">FREE (₱0)</span>';
+        } else {
+          feeEl.innerHTML = `<span style="color:#b45309; font-weight:700;">₱${fee}</span>`;
+        }
+      }
+      if (grandEl) grandEl.innerText = "₱" + grandTotal;
+    }
+
+    function updatePickerDistance() {
+      const dist = parseFloat(calculateDistance(STORE_COORDS[0], STORE_COORDS[1], userDeliveryCoords[0], userDeliveryCoords[1]));
+      const fee = getDeliveryFee(dist);
+
+      const distEl = document.getElementById("deliveryDistanceText");
+      if (distEl) {
+        if (fee === 0) {
+          distEl.innerHTML = `~${dist.toFixed(1)} km <span style="color:#16a34a; font-weight:700;">(FREE)</span>`;
+        } else {
+          distEl.innerHTML = `~${dist.toFixed(1)} km <span style="color:#b45309; font-weight:700;">(₱${fee} Fee)</span>`;
+        }
+      }
+
+      const badge = document.getElementById("checkoutMapBadge");
+      if (badge) {
+        if (fee === 0) {
+          badge.style.background = "#16a34a";
+          badge.innerText = "🛵 FREE (≤1km)";
+        } else {
+          badge.style.background = "#d97706";
+          badge.innerText = `🛵 Delivery: ₱${fee} (~${dist.toFixed(1)}km)`;
+        }
+      }
+
+      updateCheckoutBreakdown();
+    }
+
+    function initPickerMap() {
+      const mapContainer = document.getElementById("checkoutPickerMap");
+      if (!mapContainer || typeof L === "undefined") return;
+
+      if (pickerMap) {
+        pickerMap.invalidateSize();
+        setTimeout(() => pickerMap.invalidateSize(), 100);
+        return;
+      }
+
+      pickerMap = L.map('checkoutPickerMap', {
+        center: STORE_COORDS,
+        zoom: 14,
+        zoomControl: true
+      });
+
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: '&copy; Esri &mdash; OpenStreetMap contributors'
+      }).addTo(pickerMap);
+
+      // Store Marker (Starting Point)
+      const storeIcon = L.divIcon({
+        className: 'custom-map-div-icon',
+        html: '<div class="custom-map-icon" title="Store Starting Point: 14.5728° N, 121.0794° E">👑</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      L.marker(STORE_COORDS, { icon: storeIcon }).addTo(pickerMap)
+        .bindPopup("<b>👑 Starting Point: Creamy Crown Egg</b><br>14.5728° N, 121.0794° E<br>F. Legaspi St., Ugong, Pasig");
+
+      // Customer Delivery Pin
+      const destIcon = L.divIcon({
+        className: 'custom-map-div-icon',
+        html: '<div class="custom-map-icon" title="Your Delivery Pin">📍</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 30]
+      });
+      pickerMarker = L.marker(userDeliveryCoords, { icon: destIcon, draggable: true }).addTo(pickerMap)
+        .bindPopup("<b>📍 Delivery Destination</b><br>Tap or drag to set your address location");
+
+      // Route Polyline
+      pickerRouteLine = L.polyline([STORE_COORDS, userDeliveryCoords], {
+        color: '#b45309',
+        weight: 3.5,
+        dashArray: '6, 8',
+        opacity: 0.85
+      }).addTo(pickerMap);
+
+      updatePickerDistance();
+
+      // Click to relocate pin
+      pickerMap.on('click', function(e) {
+        userDeliveryCoords = [e.latlng.lat, e.latlng.lng];
+        pickerMarker.setLatLng(e.latlng);
+        pickerRouteLine.setLatLngs([STORE_COORDS, e.latlng]);
+        updatePickerDistance();
+
+        const addressInput = document.getElementById("checkoutAddress");
+        if (addressInput && (!addressInput.value.trim() || addressInput.value.includes("Pin:"))) {
+          addressInput.value = `Delivery Pin: ${e.latlng.lat.toFixed(4)}° N, ${e.latlng.lng.toFixed(4)}° E (Pasig City)`;
         }
       });
 
+      pickerMarker.on('dragend', function(e) {
+        const pos = e.target.getLatLng();
+        userDeliveryCoords = [pos.lat, pos.lng];
+        pickerRouteLine.setLatLngs([STORE_COORDS, pos]);
+        updatePickerDistance();
+
+        const addressInput = document.getElementById("checkoutAddress");
+        if (addressInput && (!addressInput.value.trim() || addressInput.value.includes("Pin:"))) {
+          addressInput.value = `Delivery Pin: ${pos.lat.toFixed(4)}° N, ${pos.lng.toFixed(4)}° E (Pasig City)`;
+        }
+      });
+
+      setTimeout(() => pickerMap.invalidateSize(), 200);
+    }
+
+    function locateUserPosition() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            userDeliveryCoords = [lat, lng];
+
+            if (pickerMarker) pickerMarker.setLatLng([lat, lng]);
+            if (pickerRouteLine) pickerRouteLine.setLatLngs([STORE_COORDS, [lat, lng]]);
+            if (pickerMap) {
+              pickerMap.setView([lat, lng], 15);
+              pickerMap.invalidateSize();
+            }
+            updatePickerDistance();
+
+            const addressInput = document.getElementById("checkoutAddress");
+            if (addressInput && !addressInput.value.trim()) {
+              addressInput.value = `GPS Location: ${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E (Pasig City)`;
+            }
+          },
+          function(err) {
+            alert("Could not automatically retrieve GPS. Tap anywhere on the map to pin your delivery address.");
+          },
+          { timeout: 8000 }
+        );
+      } else {
+        alert("Geolocation is not supported by your browser. Please tap on the map to place your delivery pin.");
+      }
+    }
+
+    function renderTrackingMap(destCoords, custName, custAddress, deliveryFee, distanceKm) {
+      const container = document.getElementById("receiptTrackingMap");
+      if (!container || typeof L === "undefined") return;
+
+      const fee = typeof deliveryFee === "number" ? deliveryFee : 0;
+      const distStr = distanceKm ? `${distanceKm} km` : "";
+
+      if (trackingAnimationInterval) {
+        clearInterval(trackingAnimationInterval);
+        trackingAnimationInterval = null;
+      }
+
+      if (trackingMap) {
+        trackingMap.remove();
+        trackingMap = null;
+      }
+
+      trackingMap = L.map('receiptTrackingMap', { zoomControl: true });
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: '&copy; Esri &mdash; OpenStreetMap contributors'
+      }).addTo(trackingMap);
+
+      const bounds = L.latLngBounds([STORE_COORDS, destCoords]);
+      trackingMap.fitBounds(bounds, { padding: [30, 30] });
+
+      // Store marker
+      const storeIcon = L.divIcon({
+        className: 'custom-map-div-icon',
+        html: '<div class="custom-map-icon">👑</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      L.marker(STORE_COORDS, { icon: storeIcon }).addTo(trackingMap)
+        .bindPopup("<b>👑 Starting Point: Creamy Crown Egg</b><br>14.5728° N, 121.0794° E<br>F. Legaspi St., Ugong, Pasig");
+
+      // Customer Destination marker
+      const destIcon = L.divIcon({
+        className: 'custom-map-div-icon',
+        html: '<div class="custom-map-icon">📍</div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 30]
+      });
+      const feeLabel = fee === 0 ? "FREE DELIVERY (Within 1km)" : `Delivery Fee: ₱${fee}${distStr ? ' (~' + distStr + ')' : ''}`;
+      const feeColor = fee === 0 ? "#15803d" : "#b45309";
+      L.marker(destCoords, { icon: destIcon }).addTo(trackingMap)
+        .bindPopup(`<b>📍 ${custName}</b><br>${custAddress}<br><span style="color:${feeColor};font-weight:700;">${feeLabel}</span>`);
+
+      // Delivery route line
+      L.polyline([STORE_COORDS, destCoords], {
+        color: '#b45309',
+        weight: 4,
+        dashArray: '8, 8',
+        opacity: 0.8
+      }).addTo(trackingMap);
+
+      // Moving rider icon
+      const riderIcon = L.divIcon({
+        className: 'custom-map-div-icon',
+        html: '<div class="custom-map-icon" style="filter: drop-shadow(0 0 6px rgba(245,158,11,0.9)); font-size: 1.5rem;">🛵</div>',
+        iconSize: [34, 34],
+        iconAnchor: [17, 17]
+      });
+      const riderTooltip = fee === 0 ? "🛵 Rider on the way! (FREE DELIVERY)" : `🛵 Rider on the way! (Delivery: ₱${fee})`;
+      trackingRiderMarker = L.marker(STORE_COORDS, { icon: riderIcon }).addTo(trackingMap)
+        .bindTooltip(riderTooltip, { permanent: true, direction: "top" });
+
+      // Smooth rider movement simulation
+      let progress = 0;
+      trackingAnimationInterval = setInterval(() => {
+        progress += 0.012;
+        if (progress > 1) progress = 0;
+
+        const currentLat = STORE_COORDS[0] + (destCoords[0] - STORE_COORDS[0]) * progress;
+        const currentLng = STORE_COORDS[1] + (destCoords[1] - STORE_COORDS[1]) * progress;
+        if (trackingRiderMarker) {
+          trackingRiderMarker.setLatLng([currentLat, currentLng]);
+        }
+      }, 100);
+
+      setTimeout(() => trackingMap.invalidateSize(), 200);
+    }
 
     /* =========================
        CHECKOUT
@@ -2956,25 +4355,246 @@
 
     function checkout() {
       if (cartList.length === 0) {
-        alert("Your cart is empty.");
+        alert("Your cart is empty. Please add items before checking out!");
         return;
       }
 
-      const total = cartList.length * 35;
+      const checkoutSection = document.getElementById("checkoutInfoSection");
+      if (checkoutSection) {
+        checkoutSection.style.display = "block";
+        checkoutSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        const contactInput = document.getElementById("checkoutContact");
+        if (contactInput && (!contactInput.value || !contactInput.value.startsWith("09"))) {
+          contactInput.value = "09";
+        }
+        const nameInput = document.getElementById("checkoutName");
+        if (nameInput) {
+          setTimeout(() => nameInput.focus(), 250);
+        }
+        setTimeout(() => {
+          initPickerMap();
+          if (typeof updateCheckoutBreakdown === "function") {
+            updateCheckoutBreakdown();
+          }
+        }, 150);
+      }
+    }
 
-      alert(
-        "Thank you for choosing Creamy Crown Egg! 🥚\n\n" +
-        "Your Order (" + cartList.length + " items):\n" +
-        cartList.map((item, i) => (i + 1) + ". " + item).join("\n") +
-        "\n\nTotal: ₱" + total +
-        "\n\nYour order has been received."
-      );
+    function handleContactInput(input) {
+      let digits = input.value.replace(/\D/g, "");
 
-      // Reset cart after checkout
+      // Handle numbers pasted with country code +639 or 639
+      if (digits.startsWith("639")) {
+        digits = "0" + digits.slice(2);
+      }
+
+      if (digits.startsWith("09")) {
+        input.value = digits.slice(0, 11);
+      } else if (digits.startsWith("9")) {
+        input.value = ("0" + digits).slice(0, 11);
+      } else if (digits === "0" || digits === "") {
+        input.value = "09";
+      } else {
+        // Enforce 09 prefix followed by remaining digits
+        input.value = ("09" + digits.replace(/^0+/, "")).slice(0, 11);
+      }
+    }
+
+    function handleContactFocus(input) {
+      if (!input.value || !input.value.startsWith("09")) {
+        input.value = "09";
+      }
+      setTimeout(() => {
+        if (input.selectionStart < 2) {
+          input.setSelectionRange(input.value.length, input.value.length);
+        }
+      }, 10);
+    }
+
+    function handleContactKeyDown(event, input) {
+      // Prevent deleting the initial '09' with Backspace
+      if (event.key === "Backspace") {
+        if (input.selectionStart <= 2 && input.selectionEnd <= 2) {
+          event.preventDefault();
+        }
+      }
+    }
+
+    function handlePlaceOrder(event) {
+      if (event) event.preventDefault();
+
+      if (cartList.length === 0) {
+        alert("Your cart is empty. Please add items before checking out!");
+        return;
+      }
+
+      const nameInput = document.getElementById("checkoutName");
+      const contactInput = document.getElementById("checkoutContact");
+      const addressInput = document.getElementById("checkoutAddress");
+      const paymentInput = document.getElementById("checkoutPayment");
+
+      const name = nameInput ? nameInput.value.trim() : "";
+      const contact = contactInput ? contactInput.value.trim() : "";
+      const address = addressInput ? addressInput.value.trim() : "";
+      const payment = paymentInput ? paymentInput.value : "Cash on Delivery (COD)";
+
+      if (!name) {
+        alert("Please enter your Name.");
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      if (/[0-9]/.test(name)) {
+        alert("Name cannot contain numbers. Please enter letters only.");
+        if (nameInput) {
+          nameInput.value = name.replace(/[0-9]/g, "");
+          nameInput.focus();
+        }
+        return;
+      }
+
+      if (!contact || contact === "09") {
+        alert("Please enter your complete 11-digit Contact Number starting with 09.");
+        if (contactInput) {
+          contactInput.focus();
+          contactInput.setSelectionRange(contactInput.value.length, contactInput.value.length);
+        }
+        return;
+      }
+
+      const phoneDigits = contact.replace(/\D/g, "");
+      if (!phoneDigits.startsWith("09")) {
+        alert("Contact Number must start with 09 (e.g. 09XXXXXXXXX).");
+        if (contactInput) {
+          contactInput.value = "09";
+          contactInput.focus();
+        }
+        return;
+      }
+
+      if (phoneDigits.length !== 11) {
+        alert("Contact Number must have exactly 11 digits (e.g. 09XXXXXXXXX). You entered " + phoneDigits.length + " digits.");
+        if (contactInput) {
+          contactInput.focus();
+          contactInput.setSelectionRange(contactInput.value.length, contactInput.value.length);
+        }
+        return;
+      }
+
+      if (!address) {
+        alert("Please enter your Delivery Address.");
+        if (addressInput) addressInput.focus();
+        return;
+      }
+
+      const subtotal = cartList.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+      const dist = parseFloat(calculateDistance(STORE_COORDS[0], STORE_COORDS[1], userDeliveryCoords[0], userDeliveryCoords[1]));
+      const deliveryFee = getDeliveryFee(dist);
+      const total = subtotal + deliveryFee;
+      const orderId = "#CCE-" + Math.floor(1000 + Math.random() * 9000);
+
+      // Populate Receipt Modal
+      const receiptOrderId = document.getElementById("receiptOrderId");
+      const receiptName = document.getElementById("receiptName");
+      const receiptContact = document.getElementById("receiptContact");
+      const receiptAddress = document.getElementById("receiptAddress");
+      const receiptPayment = document.getElementById("receiptPayment");
+      const receiptSubtotal = document.getElementById("receiptSubtotal");
+      const receiptDistance = document.getElementById("receiptDistance");
+      const receiptDeliveryFee = document.getElementById("receiptDeliveryFee");
+      const receiptTotal = document.getElementById("receiptTotal");
+      const receiptItemsList = document.getElementById("receiptItemsList");
+      const receiptDeliveryBadge = document.getElementById("receiptDeliveryBadge");
+
+      if (receiptOrderId) receiptOrderId.innerText = orderId;
+      if (receiptName) receiptName.innerText = name;
+      if (receiptContact) receiptContact.innerText = phoneDigits;
+      if (receiptAddress) receiptAddress.innerText = address;
+      if (receiptPayment) receiptPayment.innerText = payment;
+      if (receiptSubtotal) receiptSubtotal.innerText = "₱" + subtotal;
+      if (receiptDistance) receiptDistance.innerText = dist.toFixed(1) + " km";
+      if (receiptDeliveryFee) {
+        if (deliveryFee === 0) {
+          receiptDeliveryFee.innerHTML = '<span style="color:#16a34a; font-weight:700;">FREE (₱0)</span>';
+        } else {
+          receiptDeliveryFee.innerHTML = `<span style="color:#b45309; font-weight:700;">₱${deliveryFee}</span>`;
+        }
+      }
+      if (receiptTotal) receiptTotal.innerText = "₱" + total;
+
+      if (receiptDeliveryBadge) {
+        if (deliveryFee === 0) {
+          receiptDeliveryBadge.innerText = "FREE DELIVERY (≤1km)";
+          receiptDeliveryBadge.style.background = "#dcfce7";
+          receiptDeliveryBadge.style.color = "#15803d";
+        } else {
+          receiptDeliveryBadge.innerText = `DELIVERY: ₱${deliveryFee} (~${dist.toFixed(1)} km)`;
+          receiptDeliveryBadge.style.background = "#fef3c7";
+          receiptDeliveryBadge.style.color = "#b45309";
+        }
+      }
+
+      if (receiptItemsList) {
+        receiptItemsList.innerHTML = cartList
+          .map(item => `
+            <div class="receipt-item-row">
+              <span class="receipt-item-name">${item.quantity > 1 ? `${item.name} ${item.quantity}x` : item.name}</span>
+              <span class="receipt-item-price">₱${item.quantity * item.price}</span>
+            </div>
+          `)
+          .join("");
+      }
+
+      // Hide cart drawer if open
+      const cartSidebar = document.getElementById("cartSidebar");
+      if (cartSidebar && cartSidebar.classList.contains("open")) {
+        cartSidebar.classList.remove("open");
+      }
+
+      // Show Order Confirmation Receipt Modal
+      const orderModal = document.getElementById("orderModalOverlay");
+      if (orderModal) {
+        orderModal.style.display = "flex";
+        setTimeout(() => {
+          renderTrackingMap(userDeliveryCoords, name, address, deliveryFee, dist);
+        }, 200);
+      }
+
+      // Reset form and cart
+      const checkoutForm = document.getElementById("checkoutForm");
+      if (checkoutForm) {
+        checkoutForm.reset();
+        const contactField = document.getElementById("checkoutContact");
+        if (contactField) contactField.value = "09";
+      }
+
       cartList = [];
       cartCount = 0;
       updateCartUI();
-      toggleCart();
+    }
+
+    function closeOrderModal(event) {
+      if (event && event.target && event.target.id !== "orderModalOverlay" && !event.target.classList.contains("order-modal-close") && !event.target.classList.contains("order-modal-done-btn")) {
+        return;
+      }
+      if (trackingAnimationInterval) {
+        clearInterval(trackingAnimationInterval);
+        trackingAnimationInterval = null;
+      }
+      const orderModal = document.getElementById("orderModalOverlay");
+      if (orderModal) {
+        orderModal.style.display = "none";
+      }
+    }
+
+    function checkoutFromChat() {
+      const cartSidebar = document.getElementById("cartSidebar");
+      if (!cartSidebar.classList.contains("open")) {
+        cartSidebar.classList.add("open");
+      }
+      setTimeout(() => {
+        checkout();
+      }, 300);
     }
 
 
@@ -2992,6 +4612,28 @@
         !button.contains(event.target)
       ) {
         closeMobileMenu();
+      }
+    });
+
+
+    /* =========================
+       INTERNAL ANCHOR SMOOTH SCROLL (PREVENTS FILE:// ORIGIN WARNING)
+    ========================== */
+
+    document.addEventListener("click", function(event) {
+      const anchor = event.target.closest('a[href^="#"]');
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      if (href === "#" || href === "") {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      const targetId = href.substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        event.preventDefault();
+        targetElement.scrollIntoView({ behavior: "smooth" });
       }
     });
 
@@ -3205,7 +4847,7 @@
           if (query.includes(key)) {
             const flavor = flavorMap[key];
             addToCart(flavor);
-            return `👑 Great choice! Added <b>${flavor}</b> to your cart (₱35).<br>You now have <b>${cartList.length} item(s)</b>.<br><button type="button" onclick="toggleCart()" class="chat-inline-btn">View Cart 🛒</button>`;
+            return `👑 Great choice! Added <b>${flavor}</b> to your cart (₱35).<br>You now have <b>${cartCount} item(s)</b>.<br><button type="button" onclick="toggleCart()" class="chat-inline-btn">View Cart 🛒</button>`;
           }
         }
       }
@@ -3213,9 +4855,7 @@
       // Check for prices
       if (query.includes("price") || query.includes("cost") || query.includes("how much") || query.includes("magkano") || query.includes("rate")) {
         return `💰 <b>Our Pricing:</b><br>
-        • <b>Single Cup:</b> ₱35 each<br>
-        • <b>Crown Trio Box (3 pcs):</b> ₱100 (Save ₱5)<br>
-        • <b>Party Platter (5 pcs):</b> ₱170 (Save ₱5)<br><br>
+        All our signature egg cup flavors are just <b>₱35 per cup</b>!<br><br>
         Gourmet quality made affordable for everyday cravings!`;
       }
 
@@ -3230,8 +4870,8 @@
       }
 
       // Check for party / bulk
-      if (query.includes("party") || query.includes("bulk") || query.includes("catering") || query.includes("event") || query.includes("platter")) {
-        return `🎉 <b>Party Platters & Bulk Orders:</b><br>We do party platters (5 pcs for ₱170) and bulk boxes for gatherings and events!<br>Please call us at <b>09603794271</b> in advance to book.`;
+      if (query.includes("party") || query.includes("bulk") || query.includes("catering") || query.includes("event") || query.includes("platter") || query.includes("box") || query.includes("trio")) {
+        return `🎉 <b>Bulk Orders & Events:</b><br>We cater bulk orders for parties and events at just <b>₱35 per cup</b>!<br>Please call us at <b>09603794271</b> in advance to arrange your order.`;
       }
 
       // Check cart status
@@ -3239,9 +4879,13 @@
         if (cartList.length === 0) {
           return `Your cart is currently empty! Tap <b>👑 Flavors</b> to pick a delicious treat!`;
         } else {
-          return `🛒 You have <b>${cartList.length} item(s)</b> totaling <b>₱${cartList.length * 35}</b>:<br>` +
-            cartList.map(item => "• " + item).join("<br>") +
-            `<br><button type="button" onclick="toggleCart()" class="chat-inline-btn">Open Cart 🛒</button>`;
+          const grandTotal = cartList.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+          return `🛒 You have <b>${cartCount} item(s)</b> totaling <b>₱${grandTotal}</b>:<br>` +
+            cartList.map(item => `• ${item.quantity > 1 ? `${item.name} ${item.quantity}x` : item.name} (₱${item.quantity * item.price})`).join("<br>") +
+            `<div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
+              <button type="button" onclick="checkoutFromChat()" class="chat-inline-btn">Proceed to Checkout 💳</button>
+              <button type="button" onclick="toggleCart()" class="chat-inline-btn">View Cart 🛒</button>
+            </div>`;
         }
       }
 
@@ -3250,16 +4894,24 @@
         return `🥚 <b>Creamy Crown Egg</b> is Pasig's favorite gourmet snack! We take hard-boiled eggs, give them an airy panko crunch shell, and fill them with silky whipped yolk and artisan toppings.`;
       }
 
+      // Check for payment methods / COD / GCash / Maya
+      if (query.includes("payment") || query.includes("pay") || query.includes("gcash") || query.includes("maya") || query.includes("cod") || query.includes("mop") || query.includes("cash")) {
+        return `💵 <b>Payment Method:</b><br>
+        We currently accept <b>Cash on Delivery (COD) only</b>.<br><br>
+        Please prepare your cash payment upon the rider's arrival!`;
+      }
+
       // Greetings
       if (query.includes("hi") || query.includes("hello") || query.includes("hey") || query.includes("good morning") || query.includes("good evening") || query.includes("kamusta")) {
-        return `Hello! 👑 Welcome to Creamy Crown Egg. How can I help you today? You can ask about our <b>flavors</b>, <b>prices</b>, <b>location</b>, or say <i>'Order Cheesy Bacon'</i>!`;
+        return `Hello! 👑 Welcome to Creamy Crown Egg. How can I help you today? You can ask about our <b>flavors</b>, <b>prices</b>, <b>payment method</b>, <b>location</b>, or say <i>'Order Cheesy Bacon'</i>!`;
       }
 
       // Default fallback
-      return `I can help you with anything about Creamy Crown Egg! 🥚 Try asking about our <b>flavors</b>, <b>prices</b>, <b>location</b>, or tap one of the quick options below:
+      return `I can help you with anything about Creamy Crown Egg! 🥚 Try asking about our <b>flavors</b>, <b>prices</b>, <b>payment method</b>, <b>location</b>, or tap one of the quick options below:
       <div class="chat-chips">
         <button type="button" class="chat-chip" onclick="handleChipClick('Flavors')">👑 Flavors</button>
         <button type="button" class="chat-chip" onclick="handleChipClick('Prices')">💰 Prices</button>
+        <button type="button" class="chat-chip" onclick="handleChipClick('Payment')">💵 Payment</button>
         <button type="button" class="chat-chip" onclick="handleChipClick('Location')">📍 Location</button>
         <button type="button" class="chat-chip" onclick="handleChipClick('Party Pre-orders')">🎉 Bulk Orders</button>
       </div>`;
@@ -3320,6 +4972,7 @@
         <div class="chat-chips">
           <button type="button" class="chat-chip" onclick="handleChipClick('Flavors')">👑 Flavors</button>
           <button type="button" class="chat-chip" onclick="handleChipClick('Prices')">💰 Prices</button>
+          <button type="button" class="chat-chip" onclick="handleChipClick('Payment')">💵 Payment</button>
           <button type="button" class="chat-chip" onclick="handleChipClick('Location')">📍 Location</button>
           <button type="button" class="chat-chip" onclick="handleChipClick('Order Cheesy Bacon')">🥓 Order Cheesy Bacon</button>
           <button type="button" class="chat-chip" onclick="handleChipClick('My Cart')">🛒 My Cart</button>
@@ -3331,7 +4984,7 @@
       </div>
     </div>
 
-    <form class="chatbot-input-area" onsubmit="handleChatSubmit(event)">
+    <form class="chatbot-input-area" action="javascript:void(0);" onsubmit="handleChatSubmit(event); return false;">
       <input
         type="text"
         id="chatbotInput"
@@ -3347,6 +5000,117 @@
       </button>
     </form>
 
+  </div>
+
+  <!-- =========================
+       ORDER CONFIRMATION MODAL & RECEIPT
+  ========================== -->
+  <div id="orderModalOverlay" class="order-modal-overlay" style="display: none;" onclick="closeOrderModal(event)">
+    <div class="order-modal-card" onclick="event.stopPropagation()">
+      <button class="order-modal-close" onclick="closeOrderModal()" aria-label="Close receipt">&times;</button>
+      
+      <div class="order-success-icon">
+        <span>👑</span>
+      </div>
+
+      <h3 class="order-modal-title">Order Placed Successfully!</h3>
+      <p class="order-modal-sub">Thank you for ordering with <strong>Creamy Crown Egg</strong>! Your order is being prepared with royal care.</p>
+
+      <div class="order-receipt">
+        <div class="order-receipt-header">
+          <span class="order-badge">RECEIPT</span>
+          <span id="receiptOrderId" class="order-id-text">#CCE-1001</span>
+        </div>
+
+        <div class="receipt-section">
+          <div class="receipt-section-title">Customer Information</div>
+          <div class="receipt-row">
+            <span class="receipt-label">Name:</span>
+            <span id="receiptName" class="receipt-value">-</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Contact Number:</span>
+            <span id="receiptContact" class="receipt-value">-</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Address:</span>
+            <span id="receiptAddress" class="receipt-value">-</span>
+          </div>
+        <!-- Live Delivery Tracking Map (Free via Leaflet & OpenStreetMap) -->
+        <div class="delivery-tracking-section">
+          <div class="receipt-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>🛵 Live Delivery Tracker</span>
+            <span id="receiptDeliveryBadge" class="tracking-free-pill">FREE DELIVERY (≤1km)</span>
+          </div>
+
+          <div class="tracking-status-steps">
+            <div class="track-step done">
+              <span class="track-dot"></span>
+              <span class="track-label">Received</span>
+            </div>
+            <div class="track-line done"></div>
+            <div class="track-step active">
+              <span class="track-dot"></span>
+              <span class="track-label">Preparing</span>
+            </div>
+            <div class="track-line"></div>
+            <div class="track-step">
+              <span class="track-dot"></span>
+              <span class="track-label">On Way</span>
+            </div>
+            <div class="track-line"></div>
+            <div class="track-step">
+              <span class="track-dot"></span>
+              <span class="track-label">Arrived</span>
+            </div>
+          </div>
+
+          <div id="receiptTrackingMap" class="receipt-tracking-map"></div>
+
+          <div class="tracking-origin-info">
+            <div class="origin-row">
+              <span class="origin-badge">ORIGIN</span>
+              <span class="origin-name">Creamy Crown Egg (14.5728° N, 121.0794° E)</span>
+            </div>
+            <div class="origin-sub">F. Legaspi St., Ugong, Pasig City • Rider preparing your order</div>
+          </div>
+        </div>
+
+        <div class="receipt-section">
+          <div class="receipt-section-title">Order Details</div>
+          <div id="receiptItemsList" class="receipt-items-list">
+            <!-- items populated dynamically -->
+          </div>
+          <div class="receipt-divider"></div>
+          <div class="receipt-row">
+            <span class="receipt-label">Items Subtotal:</span>
+            <span id="receiptSubtotal" class="receipt-value">₱0</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Delivery Fee (<span id="receiptDistance">0.0 km</span>):</span>
+            <span id="receiptDeliveryFee" class="receipt-value" style="color: #16a34a; font-weight: 700;">FREE (₱0)</span>
+          </div>
+          <div class="receipt-row receipt-total-row">
+            <span>Total Amount:</span>
+            <span id="receiptTotal" class="receipt-total-val">₱0</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Payment Method:</span>
+            <span id="receiptPayment" class="receipt-value">Cash on Delivery (COD)</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-label">Estimated Delivery:</span>
+            <span class="receipt-value" style="color: #b45309; font-weight: 700;">25 - 35 mins</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-modal-actions">
+        <button type="button" class="btn-terra order-modal-done-btn" style="width: 100%; text-align: center;" onclick="closeOrderModal()">
+          Done / Continue Browsing
+        </button>
+      </div>
+    </div>
   </div>
 
 </body>
